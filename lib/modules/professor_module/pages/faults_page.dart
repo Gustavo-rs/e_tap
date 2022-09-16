@@ -27,13 +27,20 @@ class FaultsPage extends StatelessWidget {
       body: Center(
         child: ListView.builder(
           itemCount: homeController.faltas.length,
-          itemBuilder: ((context, index) => ListTile(
-                title: Text(homeController.faltas[index].nome),
-                subtitle: Text(homeController.faltas[index].data
-                    .toString()
-                    .substring(0, 10)),
-                trailing: Text('Faltas: ' +
-                    homeController.faltas[index].qtd_faltas.toString()),
+          itemBuilder: ((context, index) => Column(
+                children: [
+                  ListTile(
+                    title: Text(homeController.faltas[index].nome),
+                    subtitle: Text(homeController.faltas[index].data
+                        .toString()
+                        .substring(0, 10)),
+                    trailing: Text('Faltas: ' +
+                        homeController.faltas[index].qtd_faltas.toString()),
+                  ),
+                  Divider(
+                    color: Colors.grey[300],
+                  ),
+                ],
               )),
         ),
       ),

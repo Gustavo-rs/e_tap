@@ -13,7 +13,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 2), () {
-      Modular.to.navigate('/login');
+      Modular.to.navigate('/login/');
     });
     super.initState();
   }
@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 35, 7, 192),
+      backgroundColor: Color(0xFF107AFF),
       body: Center(
         child: Lottie.asset(
           'assets/logo.json',

@@ -24,7 +24,7 @@ class _ProfessorPageState extends State<ProfessorPage> {
             },
             icon: Icon(
               Icons.exit_to_app,
-              color: Colors.blue,
+              color: Color(0xFF107AFF),
             ),
           ),
         ],
@@ -47,12 +47,11 @@ class _ProfessorPageState extends State<ProfessorPage> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromARGB(255, 35, 7, 192),
-                  ),
                   child: Card(
-                    color: const Color.fromARGB(255, 35, 7, 192),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    color: Color(0xFF107AFF),
                     child: ListTile(
                       title: const Text(
                         'Histórico de presença',
@@ -80,12 +79,11 @@ class _ProfessorPageState extends State<ProfessorPage> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromARGB(255, 35, 7, 192),
-                  ),
                   child: Card(
-                    color: const Color.fromARGB(255, 35, 7, 192),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    color: Color(0xFF107AFF),
                     child: ListTile(
                       title: const Text(
                         'Minhas disciplinas',

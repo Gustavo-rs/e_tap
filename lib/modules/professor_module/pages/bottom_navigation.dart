@@ -30,7 +30,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             backgroundColor: Colors.white,
             elevation: 0,
             currentIndex: _indiceAtual,
-            selectedItemColor: Colors.blue,
+            selectedItemColor: Color(0xFF107AFF),
             unselectedItemColor: Colors.grey[600],
             onTap: onTabTapped,
             items: [
@@ -38,19 +38,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   label: 'Perfil',
                   icon: Icon(
                     Icons.person,
-                    color: _indiceAtual == 0 ? Colors.blue : Colors.grey[600],
+                    color: _indiceAtual == 0 ? Color(0xFF107AFF): Colors.grey[600],
                   )),
               BottomNavigationBarItem(
                   label: 'Home',
                   icon: Icon(
                     Icons.home_outlined,
-                    color: _indiceAtual == 1 ? Colors.blue : Colors.grey[600],
+                    color: _indiceAtual == 1 ? Color(0xFF107AFF) : Colors.grey[600],
                   )),
               BottomNavigationBarItem(
                   label: 'Configurações',
                   icon: Icon(
                     Icons.settings,
-                    color: _indiceAtual == 2 ? Colors.blue : Colors.grey[600],
+                    color: _indiceAtual == 2 ? Color(0xFF107AFF) : Colors.grey[600],
                   )),
             ],
           ),

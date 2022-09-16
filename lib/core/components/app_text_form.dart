@@ -5,16 +5,20 @@ class AppTextFormField extends TextFormField {
   final IconData iconData;
   final TextEditingController controller;
   final Widget? suffixIcon;
+  final bool obscureText;
   AppTextFormField(
       {Key? key,
       required this.hintText,
       required this.iconData,
       required this.controller,
+      this.obscureText = false,
       this.suffixIcon})
       : super(
           key: key,
           style: const TextStyle(color: Colors.black),
+          cursorColor: Color(0xFF107AFF),
           controller: controller,
+          obscureText: obscureText,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(
@@ -30,7 +34,7 @@ class AppTextFormField extends TextFormField {
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(
-                    color: const Color.fromARGB(255, 35, 7, 192), width: 1.5)),
+                    color: Color(0xFF107AFF), width: 1.5)),
             suffixIcon: suffixIcon,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             fillColor: Colors.transparent,

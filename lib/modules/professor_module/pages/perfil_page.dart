@@ -14,7 +14,7 @@ class ProfilePage extends StatelessWidget {
               Container(
                 height: MediaQuery.of(context).size.height * .2,
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 35, 7, 192),
+                  color: Color(0xFF107AFF),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(24),
                     bottomRight: Radius.circular(24),
@@ -29,7 +29,7 @@ class ProfilePage extends StatelessWidget {
                       padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: const Color.fromARGB(255, 35, 7, 192),
+                        color: Color(0xFF107AFF),
                       ),
                       child: Container(
                         width: 100,
@@ -66,7 +66,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 35, 7, 192),
+                            color: Color(0xFF107AFF),
                           )),
                       Text('12345678',
                           style: TextStyle(
@@ -89,7 +89,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 35, 7, 192),
+                            color: Color(0xFF107AFF),
                           )),
                       Text('12345678',
                           style: TextStyle(

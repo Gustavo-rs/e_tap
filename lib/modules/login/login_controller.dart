@@ -1,8 +1,19 @@
 import 'package:app/core/data/login_data.dart';
 import 'package:app/core/models/login_model.dart';
+import 'package:mobx/mobx.dart';
 
-class LoginController {
+part 'login_controller.g.dart';
+
+class LoginController = _LoginController with _$LoginController;
+
+abstract class _LoginController with Store {
   List<LoginModel> login = login_data;
+
+  @observable
+  bool hiddenShowPass = true;
+
+  @action
+  void changeObscureText() => hiddenShowPass = !hiddenShowPass;
 
   bool loginCheck(String id, String senha) {
     for (var i = 0; i < login.length; i++) {

@@ -1,4 +1,3 @@
-import 'package:app/core/models/alunos_model.dart';
 import 'package:app/core/models/falta_model.dart';
 import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
 import 'package:app/modules/aluno_module/model/record.dart';
@@ -35,6 +34,13 @@ class _AlunoPageState extends State<AlunoPage> {
             alunoController.setNdefWidgets(info.hash);
             if (alunoController.ndefWidgets == '12345') {
               alunoController.setIsVisible(true);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('NFC não cadastrado!'),
+                  backgroundColor: Colors.red,
+                ),
+              );
             }
           });
       }
@@ -61,7 +67,7 @@ class _AlunoPageState extends State<AlunoPage> {
             },
             icon: Icon(
               Icons.exit_to_app,
-              color: Colors.blue,
+              color: Color(0xFF107AFF),
             ),
           ),
         ],
@@ -87,7 +93,7 @@ class _AlunoPageState extends State<AlunoPage> {
                     Text(
                       "Gilberto!",
                       style: TextStyle(
-                          color: Colors.blue,
+                          color: Color(0xFF107AFF),
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
@@ -111,70 +117,81 @@ class _AlunoPageState extends State<AlunoPage> {
                   height: 20,
                 ),
                 ElevatedButton(
-                    onPressed: () async {
-                      await read();
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          content: Observer(
-                            builder: (_) => alunoController.isVisible
-                                ? SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.2,
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: Lottie.asset(
-                                            'assets/sa.json',
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.3,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.2,
-                                            repeat: true,
-                                          ),
+                  onPressed: () async {
+                    await read();
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        content: Observer(
+                          builder: (_) => alunoController.isVisible
+                              ? SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.2,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: Lottie.asset(
+                                          'assets/sa.json',
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.2,
+                                          repeat: true,
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child:
-                                              Text('Presença contabilizada!'),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : Lottie.asset(
-                                    'assets/nfc_phone.json',
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.3,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Text('Presença contabilizada!'),
+                                      ),
+                                    ],
                                   ),
-                          ),
-                          actions: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextButton(
-                                onPressed: () {
-                                  NfcManager.instance.stopSession();
-                                  Modular.to.pop();
-                                  alunoController.setIsVisible(false);
-                                },
-                                child: const Text('Voltar'),
-                              ),
-                            ),
-                          ],
+                                )
+                              : Lottie.asset(
+                                  'assets/nfc_phone.json',
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.3,
+                                ),
                         ),
-                      );
-                      homeController.faltas.add(FaltaModel(
-                        nome: 'Gilberto Carvalho',
-                        data: DateTime.now(),
-                        qtd_faltas: 2,
-                      ));
-                    },
-                    child: Text('Aproximar')),
+                        actions: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextButton(
+                              onPressed: () {
+                                NfcManager.instance.stopSession();
+                                Modular.to.pop();
+                                alunoController.setIsVisible(false);
+                              },
+                              child: const Text('Voltar',
+                                  style: TextStyle(
+                                    color: Color(0xFF107AFF),
+                                  )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                    homeController.faltas.add(FaltaModel(
+                      nome: 'Gilberto Carvalho',
+                      data: DateTime.now(),
+                      qtd_faltas: 2,
+                    ));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF107AFF),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  child: Text(
+                    'Aproximar',
+                  ),
+                ),
               ],
             ),
           ],
