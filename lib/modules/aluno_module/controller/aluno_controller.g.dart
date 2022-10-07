@@ -41,8 +41,91 @@ mixin _$AlunoController on _AlunoController, Store {
     });
   }
 
+  late final _$stateAtom =
+      Atom(name: '_AlunoController.state', context: context);
+
+  @override
+  String get state {
+    _$stateAtom.reportRead();
+    return super.state;
+  }
+
+  @override
+  set state(String value) {
+    _$stateAtom.reportWrite(value, super.state, () {
+      super.state = value;
+    });
+  }
+
+  late final _$isLoadAtom =
+      Atom(name: '_AlunoController.isLoad', context: context);
+
+  @override
+  bool get isLoad {
+    _$isLoadAtom.reportRead();
+    return super.isLoad;
+  }
+
+  @override
+  set isLoad(bool value) {
+    _$isLoadAtom.reportWrite(value, super.isLoad, () {
+      super.isLoad = value;
+    });
+  }
+
+  late final _$isSelectedPageAtom =
+      Atom(name: '_AlunoController.isSelectedPage', context: context);
+
+  @override
+  int get isSelectedPage {
+    _$isSelectedPageAtom.reportRead();
+    return super.isSelectedPage;
+  }
+
+  @override
+  set isSelectedPage(int value) {
+    _$isSelectedPageAtom.reportWrite(value, super.isSelectedPage, () {
+      super.isSelectedPage = value;
+    });
+  }
+
+  late final _$dataHorasAlunoAtom =
+      Atom(name: '_AlunoController.dataHorasAluno', context: context);
+
+  @override
+  DataHorasAlunoModel get dataHorasAluno {
+    _$dataHorasAlunoAtom.reportRead();
+    return super.dataHorasAluno;
+  }
+
+  @override
+  set dataHorasAluno(DataHorasAlunoModel value) {
+    _$dataHorasAlunoAtom.reportWrite(value, super.dataHorasAluno, () {
+      super.dataHorasAluno = value;
+    });
+  }
+
+  late final _$dateHoursAsyncAction =
+      AsyncAction('_AlunoController.dateHours', context: context);
+
+  @override
+  Future<void> dateHours() {
+    return _$dateHoursAsyncAction.run(() => super.dateHours());
+  }
+
   late final _$_AlunoControllerActionController =
       ActionController(name: '_AlunoController', context: context);
+
+  @override
+  void changeSelectedPage(int value) {
+    final _$actionInfo = _$_AlunoControllerActionController.startAction(
+        name: '_AlunoController.changeSelectedPage');
+    try {
+      return super.changeSelectedPage(value);
+    } finally {
+      _$_AlunoControllerActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setIsVisible(bool value) {
@@ -67,10 +150,25 @@ mixin _$AlunoController on _AlunoController, Store {
   }
 
   @override
+  void setStateFunc(String value) {
+    final _$actionInfo = _$_AlunoControllerActionController.startAction(
+        name: '_AlunoController.setStateFunc');
+    try {
+      return super.setStateFunc(value);
+    } finally {
+      _$_AlunoControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 ndefWidgets: ${ndefWidgets},
-isVisible: ${isVisible}
+isVisible: ${isVisible},
+state: ${state},
+isLoad: ${isLoad},
+isSelectedPage: ${isSelectedPage},
+dataHorasAluno: ${dataHorasAluno}
     ''';
   }
 }

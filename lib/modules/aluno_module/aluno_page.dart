@@ -1,10 +1,10 @@
-import 'package:app/core/models/falta_model.dart';
+import 'package:app/core/controller/global_controller.dart';
 import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
 import 'package:app/modules/aluno_module/model/record.dart';
-import 'package:app/modules/professor_module/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
@@ -15,12 +15,10 @@ class AlunoPage extends StatefulWidget {
 
 class _AlunoPageState extends State<AlunoPage> {
   final alunoController = Modular.get<AlunoController>();
-  final homeController = HomeController();
+  final globalController = Modular.get<GlobalController>();
 
   Future<void> read() async {
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-      final NfcTag tag1;
-      tag1 = tag;
       Object? tech;
 
       tech = Ndef.from(tag);
@@ -33,7 +31,7 @@ class _AlunoPageState extends State<AlunoPage> {
 
             alunoController.setNdefWidgets(info.hash);
             if (alunoController.ndefWidgets == '12345') {
-              alunoController.setIsVisible(true);
+              alunoController.setStateFunc('success');
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -50,6 +48,12 @@ class _AlunoPageState extends State<AlunoPage> {
   }
 
   @override
+  void initState() {
+    alunoController.setStateFunc('pause');
+    super.initState();
+  }
+
+  @override
   void dispose() {
     NfcManager.instance.stopSession().catchError((_) {/* no op */});
     super.dispose();
@@ -57,144 +61,260 @@ class _AlunoPageState extends State<AlunoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Modular.to.navigate('/login');
-            },
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Color(0xFF107AFF),
-            ),
-          ),
-        ],
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Bem vindo, ",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+    return Observer(
+      builder: (_) => Scaffold(
+        backgroundColor:
+            globalController.themes ? Colors.white : Color(0xFF303030),
+        appBar: AppBar(
+          actions: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Modular.to.pushNamed('/perfil_page');
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.circleUser,
+                          color: globalController.themes
+                              ? Color(0xFF303030)
+                              : Colors.white,
+                        ),
+                        Text("Usuário",
+                            style: TextStyle(
+                                color: globalController.themes
+                                    ? Color(0xFF303030)
+                                    : Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16)),
+                      ],
                     ),
-                    Text(
-                      "Gilberto!",
-                      style: TextStyle(
-                          color: Color(0xFF107AFF),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.decelerate,
+                          width: 40,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            color: globalController.themes
+                                ? Color(0xFF303030)
+                                : Colors.white,
+                          ),
+                          child: AnimatedAlign(
+                            duration: const Duration(milliseconds: 300),
+                            alignment: globalController.themes
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            curve: Curves.decelerate,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Container(
+                                width: 15,
+                                height: 15,
+                                decoration: BoxDecoration(
+                                  color: globalController.themes
+                                      ? Colors.white
+                                      : Color(0xFF303030),
+                                  borderRadius: BorderRadius.circular(100.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          globalController.changeThemes();
+                        },
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Modular.to.navigate('/login');
+                        },
+                        icon: Icon(
+                          Icons.exit_to_app,
+                          color: globalController.themes
+                              ? Color(0xFF303030)
+                              : Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+          backgroundColor:
+              globalController.themes ? Colors.white : Color(0xFF303030),
+          elevation: 0,
+        ),
+        body: Center(
+          child: Observer(
+            builder: (_) => Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * .7,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(200),
+                          topRight: Radius.circular(200),
+                        ),
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0xFF477BFF),
+                            Color.fromARGB(255, 74, 121, 240),
+                            Color.fromARGB(213, 84, 245, 207),
+                            Color(0xFF54F5CF),
+                          ],
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          if (alunoController.state == 'success')
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Lottie.asset(
+                                      'assets/sa.json',
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.2,
+                                      repeat: true,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text('Presença contabilizada!'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (alunoController.state == 'escanear')
+                            Lottie.asset(
+                              'assets/nfc_phone.json',
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              height: MediaQuery.of(context).size.height * 0.3,
+                            ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          if (alunoController.state != 'escanear')
+                            GestureDetector(
+                              onTap: () async {
+                                alunoController.setStateFunc('escanear');
+                                await read();
+                              },
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: Color(0xFF477BFF),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Text("Tap",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ),
+                            ),
+                          if (alunoController.state == 'escanear')
+                            IconButton(
+                              onPressed: () {
+                                NfcManager.instance.stopSession();
+                                alunoController.setStateFunc('pause');
+                              },
+                              icon: Icon(Icons.close),
+                            ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Lottie.asset('assets/logo.json',
-                    width: MediaQuery.of(context).size.width * 0.4),
               ],
             ),
-            Column(
-              children: [
-                Text("Para contabilizar sua presença,aproxime perto ao leitor!",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(
-                  height: 20,
+          ),
+        ),
+        floatingActionButton: Container(
+          width: MediaQuery.of(context).size.width * 0.92,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                decoration: alunoController.isSelectedPage == 0
+                    ? BoxDecoration(
+                        color: Colors.black.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(10),
+                      )
+                    : null,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.home,
+                    color: Colors.white,
+                    size: 50,
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await read();
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        content: Observer(
-                          builder: (_) => alunoController.isVisible
-                              ? SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.2,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: Lottie.asset(
-                                          'assets/sa.json',
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.3,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.2,
-                                          repeat: true,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Text('Presença contabilizada!'),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : Lottie.asset(
-                                  'assets/nfc_phone.json',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.3,
-                                ),
-                        ),
-                        actions: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextButton(
-                              onPressed: () {
-                                NfcManager.instance.stopSession();
-                                Modular.to.pop();
-                                alunoController.setIsVisible(false);
-                              },
-                              child: const Text('Voltar',
-                                  style: TextStyle(
-                                    color: Color(0xFF107AFF),
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                    homeController.faltas.add(FaltaModel(
-                      nome: 'Gilberto Carvalho',
-                      data: DateTime.now(),
-                      qtd_faltas: 2,
-                    ));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF107AFF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+              ),
+              GestureDetector(
+                onTap: () {
+                  alunoController.changeSelectedPage(1);
+                  Modular.to.navigate('/aluno_module/disciplinas_aluno');
+                },
+                child: Container(
+                  decoration: alunoController.isSelectedPage == 1
+                      ? BoxDecoration(
+                          color: Colors.black.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10),
+                        )
+                      : null,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.list_alt,
+                      color: Colors.white,
+                      size: 50,
                     ),
                   ),
-                  child: Text(
-                    'Aproximar',
-                  ),
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
