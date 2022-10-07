@@ -1,4 +1,5 @@
 import 'package:app/core/controller/global_controller.dart';
+import 'package:app/core/util/shared_impl.dart';
 import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
 import 'package:app/modules/aluno_module/model/record.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class AlunoPage extends StatefulWidget {
 class _AlunoPageState extends State<AlunoPage> {
   final alunoController = Modular.get<AlunoController>();
   final globalController = Modular.get<GlobalController>();
+  final shared = Modular.get<LocalStorageServiceImp>();
 
   Future<void> read() async {
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
@@ -138,7 +140,8 @@ class _AlunoPageState extends State<AlunoPage> {
                         width: 10,
                       ),
                       IconButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          await shared.delete('token');
                           Modular.to.navigate('/login');
                         },
                         icon: Icon(

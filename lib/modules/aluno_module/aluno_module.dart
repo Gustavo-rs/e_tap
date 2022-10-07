@@ -1,3 +1,4 @@
+import 'package:app/core/util/shared_impl.dart';
 import 'package:app/modules/aluno_module/aluno_page.dart';
 import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
 import 'package:app/modules/aluno_module/pages/disciplinas_aluno.dart';
@@ -11,6 +12,7 @@ class AlunoModule extends Module {
   List<Bind> get binds => [
         Bind.lazySingleton((i) => AlunoController()),
         Bind.lazySingleton((i) => LoginController()),
+        Bind.lazySingleton((i) => LocalStorageServiceImp()),
       ];
 
   @override

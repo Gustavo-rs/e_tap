@@ -9,11 +9,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginController = Modular.get<LoginController>();
-    final id_controller = TextEditingController();
-    final senha_controller = TextEditingController();
-
-    id_controller.text = '3';
-    senha_controller.text = '123';
 
     return Scaffold(
       body: Container(
@@ -78,7 +73,7 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         AppTextFormField(
-                            controller: id_controller,
+                            controller: loginController.email_controller,
                             hintText: 'E-mail',
                             iconData: Icons.person_outline_outlined),
                         AppTextFormField(
@@ -97,7 +92,7 @@ class LoginPage extends StatelessWidget {
                                       color: Colors.grey[700],
                                     ),
                             ),
-                            controller: senha_controller,
+                            controller: loginController.senha_controller,
                             hintText: 'Senha',
                             iconData: Icons.key_outlined),
                         Container(
@@ -111,24 +106,17 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              bool variavel = loginController.loginCheck(
-                                  id_controller.text, senha_controller.text);
-                              if (variavel) {
-                                int test = loginController.loginCargo(
-                                    id_controller.text, senha_controller.text);
-                                if (test == 1) {
-                                  Modular.to.navigate('/professor_module');
-                                } else {
-                                  Modular.to.navigate('/aluno_module');
-                                }
-                              }
+                              loginController.login();
+                              Modular.to.navigate('/aluno_module');
                             },
-                            child: const Text('ENTRAR',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                )),
+                            child: loginController.isLoading
+                                ? CircularProgressIndicator()
+                                : Text('ENTRAR',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    )),
                           ),
                         ),
                       ],

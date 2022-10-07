@@ -41,6 +41,7 @@ class _DataHorariosAlunoState extends State<DataHorariosAluno> {
                 ),
               )
             : SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
                     Row(
@@ -75,6 +76,8 @@ class _DataHorariosAlunoState extends State<DataHorariosAluno> {
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          controller: ScrollController(),
                           shrinkWrap: true,
                           itemCount:
                               alunoController.dataHorasAluno.dates!.length,
@@ -98,37 +101,39 @@ class _DataHorariosAlunoState extends State<DataHorariosAluno> {
                                         : Color(0xFF292929),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 12),
-                                        child: Text(
-                                          "${alunoController.dataHorasAluno.dates![index].day}",
-                                          style: TextStyle(
-                                              color: globalController.themes
-                                                  ? Color(0xFF303030)
-                                                  : Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
+                                  child: SingleChildScrollView(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 12),
+                                          child: Text(
+                                            "${alunoController.dataHorasAluno.dates![index].day}",
+                                            style: TextStyle(
+                                                color: globalController.themes
+                                                    ? Color(0xFF303030)
+                                                    : Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18),
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12),
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.1,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.9,
-                                          child: Expanded(
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12),
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.1,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.9,
                                             child: ListView.builder(
                                                 scrollDirection:
                                                     Axis.horizontal,
@@ -188,9 +193,9 @@ class _DataHorariosAlunoState extends State<DataHorariosAluno> {
                                                   );
                                                 })),
                                           ),
-                                        ),
-                                      )
-                                    ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

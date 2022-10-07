@@ -1,5 +1,8 @@
-import 'package:app/core/data/login_data.dart';
-import 'package:app/core/models/login_model.dart';
+import 'package:app/core/util/shared_impl.dart';
+import 'package:app/modules/login/model/login_model.dart';
+import 'package:app/modules/login/service/login_impl.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'login_controller.g.dart';
@@ -7,7 +10,21 @@ part 'login_controller.g.dart';
 class LoginController = _LoginController with _$LoginController;
 
 abstract class _LoginController with Store {
-  List<LoginModel> login = login_data;
+  @observable
+  var email_controller = TextEditingController();
+
+  final shared = Modular.get<LocalStorageServiceImp>();
+
+  @observable
+  var senha_controller = TextEditingController();
+
+  final loginImpl = LoginImpl();
+
+  @observable
+  var login_auth = LoginModel();
+
+  @observable
+  bool isLoading = false;
 
   @observable
   bool hiddenShowPass = true;
@@ -15,25 +32,12 @@ abstract class _LoginController with Store {
   @action
   void changeObscureText() => hiddenShowPass = !hiddenShowPass;
 
-  bool loginCheck(String id, String senha) {
-    for (var i = 0; i < login.length; i++) {
-      if (login[i].id == int.parse(id) && login[i].senha == senha) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  int loginCargo(String id, String senha) {
-    for (var i = 0; i < login.length; i++) {
-      if (login[i].id == int.parse(id) && login[i].senha == senha) {
-        return login[i].cargo;
-      }
-    }
-    return 0;
-  }
-
-  void cadastro(int id, String senha, int cargo) {
-    login.add(LoginModel(id: id, senha: senha, cargo: cargo));
+  @action
+  Future<void> login() async {
+    isLoading = true;
+    final data = await loginImpl.login("alunoteste@gmail.com", "123456");
+    login_auth = data;
+    await shared.write('token', data.token!);
+    isLoading = false;
   }
 }
