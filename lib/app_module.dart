@@ -1,4 +1,4 @@
-import 'package:app/core/components/perfil_page.dart';
+import 'package:app/core/pages/perfil_page.dart';
 import 'package:app/core/controller/global_controller.dart';
 import 'package:app/modules/aluno_module/aluno_module.dart';
 import 'package:app/modules/aluno_module/controller/aluno_controller.dart';

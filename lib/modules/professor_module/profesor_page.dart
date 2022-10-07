@@ -1,3 +1,4 @@
+import 'package:app/core/controller/global_controller.dart';
 import 'package:app/modules/professor_module/controller/professor_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,6 +14,7 @@ class ProfessorPage extends StatefulWidget {
 
 class _ProfessorPageState extends State<ProfessorPage> {
   final professorController = Modular.get<ProfessorController>();
+  final globalController = Modular.get<GlobalController>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +33,14 @@ class _ProfessorPageState extends State<ProfessorPage> {
                         onPressed: () {},
                         icon: Icon(
                           FontAwesomeIcons.circleUser,
-                          color: professorController.themes
+                          color: globalController.themes
                               ? Color(0xFF303030)
                               : Colors.white,
                         ),
                       ),
                       Text("Usuário",
                           style: TextStyle(
-                              color: professorController.themes
+                              color: globalController.themes
                                   ? Color(0xFF303030)
                                   : Colors.white,
                               fontWeight: FontWeight.bold,
@@ -56,13 +58,13 @@ class _ProfessorPageState extends State<ProfessorPage> {
                           height: 25,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50.0),
-                            color: professorController.themes
+                            color: globalController.themes
                                 ? Color(0xFF303030)
                                 : Colors.white,
                           ),
                           child: AnimatedAlign(
                             duration: const Duration(milliseconds: 300),
-                            alignment: professorController.themes
+                            alignment: globalController.themes
                                 ? Alignment.centerRight
                                 : Alignment.centerLeft,
                             curve: Curves.decelerate,
@@ -72,7 +74,7 @@ class _ProfessorPageState extends State<ProfessorPage> {
                                 width: 15,
                                 height: 15,
                                 decoration: BoxDecoration(
-                                  color: professorController.themes
+                                  color: globalController.themes
                                       ? Colors.white
                                       : Color(0xFF303030),
                                   borderRadius: BorderRadius.circular(100.0),
@@ -82,7 +84,7 @@ class _ProfessorPageState extends State<ProfessorPage> {
                           ),
                         ),
                         onTap: () {
-                          professorController.changeThemes();
+                          globalController.changeThemes();
                         },
                       ),
                       SizedBox(
@@ -94,7 +96,7 @@ class _ProfessorPageState extends State<ProfessorPage> {
                         },
                         icon: Icon(
                           Icons.exit_to_app,
-                          color: professorController.themes
+                          color: globalController.themes
                               ? Color(0xFF303030)
                               : Colors.white,
                         ),
@@ -106,7 +108,7 @@ class _ProfessorPageState extends State<ProfessorPage> {
             ),
           ],
           backgroundColor:
-              professorController.themes ? Colors.white : Color(0xFF303030),
+              globalController.themes ? Colors.white : Color(0xFF303030),
           elevation: 0,
         ),
         body: Container(
@@ -137,9 +139,8 @@ class _ProfessorPageState extends State<ProfessorPage> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
-                color: professorController.themes
-                    ? Colors.white
-                    : Color(0xFF303030),
+                color:
+                    globalController.themes ? Colors.white : Color(0xFF303030),
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(350),
                 ),

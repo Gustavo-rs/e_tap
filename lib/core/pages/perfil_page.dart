@@ -1,7 +1,16 @@
+import 'package:app/core/controller/global_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class PerfilPage extends StatelessWidget {
+class PerfilPage extends StatefulWidget {
   const PerfilPage({Key? key}) : super(key: key);
+
+  @override
+  State<PerfilPage> createState() => _PerfilPageState();
+}
+
+class _PerfilPageState extends State<PerfilPage> {
+  final globalController = Modular.get<GlobalController>();
 
   @override
   Widget build(BuildContext context) {

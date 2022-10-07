@@ -19,16 +19,10 @@ abstract class _ProfessorController with Store {
   final totalChamadas = TextEditingController();
 
   @observable
-  bool themes = true;
-
-  @observable
   int isSelectedPage = 0;
 
   @action
   void changeSelectedPage(int value) {
     isSelectedPage = value;
   }
-
-  @action
-  void changeThemes() => themes = !themes;
 }
