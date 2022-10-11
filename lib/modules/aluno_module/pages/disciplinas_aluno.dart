@@ -17,21 +17,11 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
   final alunoController = Modular.get<AlunoController>();
   final globalController = Modular.get<GlobalController>();
 
-  List<String> disc = [
-    'Projeto integrador',
-    'Engenharia de software',
-    'Banco de dados',
-    'Programação web',
-    'Programação mobile'
-  ];
-
-  List<String> porc = [
-    '90%',
-    '80%',
-    '96%',
-    '75%',
-    '60%',
-  ];
+  @override
+  void initState() {
+    alunoController.getMateriasAluno();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,96 +31,76 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
           actions: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.circleUser,
-                          color: globalController.themes
-                              ? Color(0xFF303030)
-                              : Colors.white,
-                        ),
-                      ),
-                      Text("Usuário",
-                          style: TextStyle(
-                              color: globalController.themes
-                                  ? Color(0xFF303030)
-                                  : Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      // Switch(
-                      //     splashRadius: 30,
-                      //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      //     thumbColor: MaterialStateProperty.all(Colors.white),
-                      //     activeTrackColor: Color(0xFF303030),
-                      //     value: true,
-                      //     onChanged: (value) {}),
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.decelerate,
-                          width: 40,
-                          height: 25,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Modular.to.pushNamed('/perfil_page');
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.circleUser,
                             color: globalController.themes
                                 ? Color(0xFF303030)
                                 : Colors.white,
                           ),
-                          child: AnimatedAlign(
-                            duration: const Duration(milliseconds: 300),
-                            alignment: globalController.themes
-                                ? Alignment.centerRight
-                                : Alignment.centerLeft,
-                            curve: Curves.decelerate,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Container(
-                                width: 15,
-                                height: 15,
-                                decoration: BoxDecoration(
+                          SizedBox(width: 10),
+                          Text("Usuário",
+                              style: TextStyle(
                                   color: globalController.themes
-                                      ? Colors.white
-                                      : Color(0xFF303030),
-                                  borderRadius: BorderRadius.circular(100.0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          globalController.changeThemes();
-                        },
+                                      ? Color(0xFF303030)
+                                      : Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16)),
+                        ],
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-
-                      IconButton(
-                        onPressed: () {
-                          Modular.to.navigate('/login');
-                        },
-                        icon: Icon(
-                          Icons.exit_to_app,
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.decelerate,
+                        width: 40,
+                        height: 25,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50.0),
                           color: globalController.themes
                               ? Color(0xFF303030)
                               : Colors.white,
                         ),
+                        child: AnimatedAlign(
+                          duration: const Duration(milliseconds: 300),
+                          alignment: globalController.themes
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          curve: Curves.decelerate,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Container(
+                              width: 15,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                color: globalController.themes
+                                    ? Colors.white
+                                    : Color(0xFF303030),
+                                borderRadius: BorderRadius.circular(100.0),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                ],
+                      onTap: () {
+                        globalController.changeThemes();
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
+            )
           ],
           backgroundColor:
               globalController.themes ? Colors.white : Color(0xFF303030),
@@ -174,78 +144,111 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                Center(
-                  child: Text("Disciplinas",
-                      style: TextStyle(
-                          color: globalController.themes
-                              ? Color(0xFF303030)
-                              : Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30)),
-                ),
-                ListView.builder(
-                    itemCount: disc.length,
-                    shrinkWrap: true,
-                    itemBuilder: ((context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              enableDrag: false,
-                              backgroundColor: globalController.themes
-                                  ? Colors.white
-                                  : Color(0xFF303030),
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20))),
-                              isDismissible: false,
-                              isScrollControlled: true,
-                              builder: (context) => SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height * .9,
-                                    child: DataHorariosAluno(
-                                      disciplina: disc[index],
-                                    ),
-                                  ));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 20),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            elevation: 0,
+            Observer(
+              builder: (_) => SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Center(
+                      child: Text("Disciplinas",
+                          style: TextStyle(
+                              color: globalController.themes
+                                  ? Color(0xFF303030)
+                                  : Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30)),
+                    ),
+                    if (alunoController.isMateriaLoad)
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: Center(
+                          child: CircularProgressIndicator(
                             color: globalController.themes
-                                ? Colors.grey[100]
-                                : Colors.black12.withOpacity(0.1),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ListTile(
-                                title: Text(disc[index],
-                                    style: TextStyle(
-                                        color: globalController.themes
-                                            ? Color(0xFF303030)
-                                            : Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
-                                trailing: Text(porc[index],
-                                    style: TextStyle(
-                                        color: globalController.themes
-                                            ? Color(0xFF303030)
-                                            : Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
-                              ),
-                            ),
+                                ? Color(0xFF303030)
+                                : Colors.white,
+                            strokeWidth: 2,
                           ),
                         ),
-                      );
-                    }))
-              ],
+                      ),
+                    if (alunoController.isVazio)
+                      Center(
+                        child: Text("Nenhuma disciplina encontrada",
+                            style: TextStyle(
+                                color: globalController.themes
+                                    ? Color(0xFF303030)
+                                    : Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20)),
+                      ),
+                    if (!alunoController.isVazio &&
+                        !alunoController.isMateriaLoad)
+                      ListView.builder(
+                          itemCount:
+                              alunoController.materiasAlunos.subjects!.length,
+                          shrinkWrap: true,
+                          itemBuilder: ((context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    enableDrag: false,
+                                    backgroundColor: globalController.themes
+                                        ? Colors.white
+                                        : Color(0xFF303030),
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20))),
+                                    isDismissible: false,
+                                    isScrollControlled: true,
+                                    builder: (context) => SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              .9,
+                                          child: DataHorariosAluno(
+                                              id_disciplina: alunoController
+                                                  .materiasAlunos
+                                                  .subjects![index]
+                                                  .subjectId
+                                                  .toString(),
+                                              nome_disciplina: alunoController
+                                                  .materiasAlunos
+                                                  .subjects![index]
+                                                  .subjectName!),
+                                        ));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 20),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  elevation: 0,
+                                  color: globalController.themes
+                                      ? Colors.grey[100]
+                                      : Colors.black12.withOpacity(0.1),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListTile(
+                                      title: Text(
+                                          alunoController.materiasAlunos
+                                              .subjects![index].subjectName!,
+                                          style: TextStyle(
+                                              color: globalController.themes
+                                                  ? Color(0xFF303030)
+                                                  : Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }))
+                  ],
+                ),
+              ),
             )
           ]),
         ),

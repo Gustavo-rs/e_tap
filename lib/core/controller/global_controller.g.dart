@@ -25,6 +25,44 @@ mixin _$GlobalController on _GlobalController, Store {
     });
   }
 
+  late final _$emailAtom =
+      Atom(name: '_GlobalController.email', context: context);
+
+  @override
+  String get email {
+    _$emailAtom.reportRead();
+    return super.email;
+  }
+
+  @override
+  set email(String value) {
+    _$emailAtom.reportWrite(value, super.email, () {
+      super.email = value;
+    });
+  }
+
+  late final _$nomeAtom =
+      Atom(name: '_GlobalController.nome', context: context);
+
+  @override
+  String get nome {
+    _$nomeAtom.reportRead();
+    return super.nome;
+  }
+
+  @override
+  set nome(String value) {
+    _$nomeAtom.reportWrite(value, super.nome, () {
+      super.nome = value;
+    });
+  }
+
+  @override
+  ObservableFuture<void> sharedEmailSenha() {
+    final _$future = super.sharedEmailSenha();
+    return ObservableFuture<void>(_$future, context: context);
+  }
+
   late final _$_GlobalControllerActionController =
       ActionController(name: '_GlobalController', context: context);
 
@@ -42,7 +80,9 @@ mixin _$GlobalController on _GlobalController, Store {
   @override
   String toString() {
     return '''
-themes: ${themes}
+themes: ${themes},
+email: ${email},
+nome: ${nome}
     ''';
   }
 }

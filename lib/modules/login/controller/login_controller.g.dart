@@ -41,6 +41,22 @@ mixin _$LoginController on _LoginController, Store {
     });
   }
 
+  late final _$login_authAtom =
+      Atom(name: '_LoginController.login_auth', context: context);
+
+  @override
+  LoginModel get login_auth {
+    _$login_authAtom.reportRead();
+    return super.login_auth;
+  }
+
+  @override
+  set login_auth(LoginModel value) {
+    _$login_authAtom.reportWrite(value, super.login_auth, () {
+      super.login_auth = value;
+    });
+  }
+
   late final _$isLoadingAtom =
       Atom(name: '_LoginController.isLoading', context: context);
 
@@ -77,8 +93,8 @@ mixin _$LoginController on _LoginController, Store {
       AsyncAction('_LoginController.login', context: context);
 
   @override
-  Future<void> login() {
-    return _$loginAsyncAction.run(() => super.login());
+  Future<void> login(BuildContext context) {
+    return _$loginAsyncAction.run(() => super.login(context));
   }
 
   late final _$_LoginControllerActionController =
@@ -100,6 +116,7 @@ mixin _$LoginController on _LoginController, Store {
     return '''
 email_controller: ${email_controller},
 senha_controller: ${senha_controller},
+login_auth: ${login_auth},
 isLoading: ${isLoading},
 hiddenShowPass: ${hiddenShowPass}
     ''';

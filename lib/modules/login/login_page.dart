@@ -1,6 +1,7 @@
 import 'package:app/core/components/app_text_form.dart';
 import 'package:app/modules/login/controller/login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class LoginPage extends StatelessWidget {
@@ -69,57 +70,65 @@ class LoginPage extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        AppTextFormField(
-                            controller: loginController.email_controller,
-                            hintText: 'E-mail',
-                            iconData: Icons.person_outline_outlined),
-                        AppTextFormField(
-                            obscureText: loginController.hiddenShowPass,
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                loginController.changeObscureText();
-                              },
-                              icon: loginController.hiddenShowPass
-                                  ? Icon(
-                                      Icons.visibility,
-                                      color: Colors.grey[700],
-                                    )
-                                  : Icon(
-                                      Icons.visibility_off,
-                                      color: Colors.grey[700],
-                                    ),
-                            ),
-                            controller: loginController.senha_controller,
-                            hintText: 'Senha',
-                            iconData: Icons.key_outlined),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF477BFF),
-                              padding: const EdgeInsets.all(12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
+                    child: Observer(
+                      builder: (_) => Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          AppTextFormField(
+                              controller: loginController.email_controller,
+                              hintText: 'E-mail',
+                              iconData: Icons.person_outline_outlined),
+                          AppTextFormField(
+                              obscureText: loginController.hiddenShowPass,
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  loginController.changeObscureText();
+                                },
+                                icon: loginController.hiddenShowPass
+                                    ? Icon(
+                                        Icons.visibility,
+                                        color: Colors.grey[700],
+                                      )
+                                    : Icon(
+                                        Icons.visibility_off,
+                                        color: Colors.grey[700],
+                                      ),
                               ),
-                            ),
-                            onPressed: () {
-                              loginController.login();
-                              Modular.to.navigate('/aluno_module');
-                            },
-                            child: loginController.isLoading
-                                ? CircularProgressIndicator()
-                                : Text('ENTRAR',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    )),
+                              controller: loginController.senha_controller,
+                              hintText: 'Senha',
+                              iconData: Icons.key_outlined),
+                          Observer(
+                            builder: (_) => loginController.isLoading
+                                ? CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 4,
+                                  )
+                                : Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color(0xFF477BFF),
+                                        padding: const EdgeInsets.all(12),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        loginController.login(context);
+                                      },
+                                      child: Text('ENTRAR',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          )),
+                                    ),
+                                  ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

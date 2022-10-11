@@ -1,5 +1,6 @@
 import 'package:app/core/pages/perfil_page.dart';
 import 'package:app/core/controller/global_controller.dart';
+import 'package:app/core/util/shared_impl.dart';
 import 'package:app/modules/aluno_module/aluno_module.dart';
 import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
 import 'package:app/modules/login/login_module.dart';
@@ -12,11 +13,15 @@ class AppModule extends Module {
   List<Bind> get binds => [
         Bind.lazySingleton((i) => AlunoController()),
         Bind.lazySingleton((i) => GlobalController()),
+        Bind.lazySingleton((i) => LocalStorageServiceImp()),
       ];
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/perfil_page', child: (_, args) => const PerfilPage()),
+        ChildRoute('/perfil_page',
+            child: (_, args) => const PerfilPage(),
+            transition: TransitionType.downToUp,
+            duration: const Duration(milliseconds: 800)),
         ChildRoute('/', child: (_, args) => const SplashPage()),
         ModuleRoute('/professor_module', module: ProfessorModule()),
         ModuleRoute('/login',

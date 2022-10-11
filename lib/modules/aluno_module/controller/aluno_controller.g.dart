@@ -41,6 +41,38 @@ mixin _$AlunoController on _AlunoController, Store {
     });
   }
 
+  late final _$isMateriaLoadAtom =
+      Atom(name: '_AlunoController.isMateriaLoad', context: context);
+
+  @override
+  bool get isMateriaLoad {
+    _$isMateriaLoadAtom.reportRead();
+    return super.isMateriaLoad;
+  }
+
+  @override
+  set isMateriaLoad(bool value) {
+    _$isMateriaLoadAtom.reportWrite(value, super.isMateriaLoad, () {
+      super.isMateriaLoad = value;
+    });
+  }
+
+  late final _$isVazioAtom =
+      Atom(name: '_AlunoController.isVazio', context: context);
+
+  @override
+  bool get isVazio {
+    _$isVazioAtom.reportRead();
+    return super.isVazio;
+  }
+
+  @override
+  set isVazio(bool value) {
+    _$isVazioAtom.reportWrite(value, super.isVazio, () {
+      super.isVazio = value;
+    });
+  }
+
   late final _$stateAtom =
       Atom(name: '_AlunoController.state', context: context);
 
@@ -105,12 +137,36 @@ mixin _$AlunoController on _AlunoController, Store {
     });
   }
 
+  late final _$materiasAlunosAtom =
+      Atom(name: '_AlunoController.materiasAlunos', context: context);
+
+  @override
+  MateriaAlunoModel get materiasAlunos {
+    _$materiasAlunosAtom.reportRead();
+    return super.materiasAlunos;
+  }
+
+  @override
+  set materiasAlunos(MateriaAlunoModel value) {
+    _$materiasAlunosAtom.reportWrite(value, super.materiasAlunos, () {
+      super.materiasAlunos = value;
+    });
+  }
+
+  late final _$getMateriasAlunoAsyncAction =
+      AsyncAction('_AlunoController.getMateriasAluno', context: context);
+
+  @override
+  Future<void> getMateriasAluno() {
+    return _$getMateriasAlunoAsyncAction.run(() => super.getMateriasAluno());
+  }
+
   late final _$dateHoursAsyncAction =
       AsyncAction('_AlunoController.dateHours', context: context);
 
   @override
-  Future<void> dateHours() {
-    return _$dateHoursAsyncAction.run(() => super.dateHours());
+  Future<void> dateHours(String id_disciplina) {
+    return _$dateHoursAsyncAction.run(() => super.dateHours(id_disciplina));
   }
 
   late final _$_AlunoControllerActionController =
@@ -165,10 +221,13 @@ mixin _$AlunoController on _AlunoController, Store {
     return '''
 ndefWidgets: ${ndefWidgets},
 isVisible: ${isVisible},
+isMateriaLoad: ${isMateriaLoad},
+isVazio: ${isVazio},
 state: ${state},
 isLoad: ${isLoad},
 isSelectedPage: ${isSelectedPage},
-dataHorasAluno: ${dataHorasAluno}
+dataHorasAluno: ${dataHorasAluno},
+materiasAlunos: ${materiasAlunos}
     ''';
   }
 }

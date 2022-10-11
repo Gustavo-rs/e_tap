@@ -1,5 +1,8 @@
+import 'package:app/core/util/shared_impl.dart';
 import 'package:app/modules/aluno_module/model/data_horas_aluno_model.dart';
+import 'package:app/modules/aluno_module/model/materias_aluno_model.dart';
 import 'package:app/modules/aluno_module/service/aluno_impl.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'aluno_controller.g.dart';
@@ -8,12 +11,22 @@ class AlunoController = _AlunoController with _$AlunoController;
 
 abstract class _AlunoController with Store {
   final alunoImpl = AlunoImpl();
+  final shared = Modular.get<LocalStorageServiceImp>();
 
   @observable
   String ndefWidgets = '';
 
   @observable
   bool isVisible = false;
+
+  @observable
+  bool isMateriaLoad = false;
+
+  @observable
+  bool isVazio = false;
+
+  @observable
+  bool isHorasVazio = false;
 
   @observable
   String state = '';
@@ -26,6 +39,9 @@ abstract class _AlunoController with Store {
 
   @observable
   var dataHorasAluno = DataHorasAlunoModel();
+
+  @observable
+  var materiasAlunos = MateriaAlunoModel();
 
   @action
   void changeSelectedPage(int value) {
@@ -44,10 +60,24 @@ abstract class _AlunoController with Store {
   }
 
   @action
-  Future<void> dateHours() async {
+  Future<void> getMateriasAluno() async {
+    isMateriaLoad = true;
+    String id = await shared.read('id') as String;
+    final data = await alunoImpl.getMaterias(id);
+    if (data.student == 'error') {
+      isHorasVazio = true;
+    }
+    materiasAlunos = data;
+    isMateriaLoad = false;
+  }
+
+  @action
+  Future<void> dateHours(String id_disciplina) async {
     isLoad = true;
-    final data = await alunoImpl.getDataHorasAluno(
-        'alunoteste@gmail.com', '123456', '1', 10);
+    String id_aluno = await shared.read('id') as String;
+    final data = await alunoImpl.getDataHorasAluno(id_aluno, id_disciplina);
+
+    if (data == []) {}
 
     isLoad = false;
     dataHorasAluno = data[0];
