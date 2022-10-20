@@ -73,6 +73,22 @@ mixin _$AlunoController on _AlunoController, Store {
     });
   }
 
+  late final _$isHorasVazioAtom =
+      Atom(name: '_AlunoController.isHorasVazio', context: context);
+
+  @override
+  bool get isHorasVazio {
+    _$isHorasVazioAtom.reportRead();
+    return super.isHorasVazio;
+  }
+
+  @override
+  set isHorasVazio(bool value) {
+    _$isHorasVazioAtom.reportWrite(value, super.isHorasVazio, () {
+      super.isHorasVazio = value;
+    });
+  }
+
   late final _$stateAtom =
       Atom(name: '_AlunoController.state', context: context);
 
@@ -223,6 +239,7 @@ ndefWidgets: ${ndefWidgets},
 isVisible: ${isVisible},
 isMateriaLoad: ${isMateriaLoad},
 isVazio: ${isVazio},
+isHorasVazio: ${isHorasVazio},
 state: ${state},
 isLoad: ${isLoad},
 isSelectedPage: ${isSelectedPage},

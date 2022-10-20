@@ -2,7 +2,8 @@ class LoginModel {
   String? status;
   String? nome;
   String? token;
-  int? id_aluno;
+  int? id;
+  int? permission;
 
   LoginModel({this.status, this.nome, this.token});
 
@@ -10,7 +11,8 @@ class LoginModel {
     status = json['status'];
     nome = json['nome'];
     token = json['token'];
-    id_aluno = json['id_aluno'];
+    id = json['id'];
+    permission = json['permission'];
   }
 
   Map<String, dynamic> toJson() {
@@ -18,7 +20,8 @@ class LoginModel {
     data['status'] = this.status;
     data['nome'] = this.nome;
     data['token'] = this.token;
-    data['id_aluno'] = this.id_aluno;
+    data['id'] = this.id;
+    data['permission'] = this.permission;
     return data;
   }
 }

@@ -47,7 +47,10 @@ class AlunoImpl extends IAlunoService {
         "Authorization": 'Bearer $token!',
       });
 
-      if (resposta.body.contains('error')) {
+      if (resposta.body.contains('error') ||
+          resposta.statusCode == 404 ||
+          resposta.statusCode == 500 ||
+          resposta.body == 'null') {
         return MateriaAlunoModel(student: 'error');
       }
 

@@ -57,6 +57,22 @@ mixin _$GlobalController on _GlobalController, Store {
     });
   }
 
+  late final _$tokenAtom =
+      Atom(name: '_GlobalController.token', context: context);
+
+  @override
+  String get token {
+    _$tokenAtom.reportRead();
+    return super.token;
+  }
+
+  @override
+  set token(String value) {
+    _$tokenAtom.reportWrite(value, super.token, () {
+      super.token = value;
+    });
+  }
+
   @override
   ObservableFuture<void> sharedEmailSenha() {
     final _$future = super.sharedEmailSenha();
@@ -82,7 +98,8 @@ mixin _$GlobalController on _GlobalController, Store {
     return '''
 themes: ${themes},
 email: ${email},
-nome: ${nome}
+nome: ${nome},
+token: ${token}
     ''';
   }
 }

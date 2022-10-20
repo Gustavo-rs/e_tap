@@ -1,4 +1,4 @@
-import 'package:app/modules/login/controller/login_controller.dart';
+import 'package:app/modules/login_module/controller/login_controller.dart';
 import 'package:app/modules/professor_module/controller/professor_controller.dart';
 import 'package:app/modules/professor_module/profesor_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -14,7 +14,7 @@ class ProfessorModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(
           '/',
-          child: (_, args) => const ProfessorPage(),
+          child: (_, args) => ProfessorPage(),
           transition: TransitionType.downToUp,
           duration: const Duration(milliseconds: 800),
         ),

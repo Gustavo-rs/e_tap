@@ -18,7 +18,6 @@ class AlunoPage extends StatefulWidget {
 class _AlunoPageState extends State<AlunoPage> {
   final alunoController = Modular.get<AlunoController>();
   final globalController = Modular.get<GlobalController>();
-  final shared = Modular.get<LocalStorageServiceImp>();
 
   Future<void> read() async {
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
@@ -88,7 +87,7 @@ class _AlunoPageState extends State<AlunoPage> {
                                 : Colors.white,
                           ),
                           SizedBox(width: 10),
-                          Text("Usuário",
+                          Text("Usuario",
                               style: TextStyle(
                                   color: globalController.themes
                                       ? Color(0xFF303030)
@@ -138,24 +137,6 @@ class _AlunoPageState extends State<AlunoPage> {
                             globalController.changeThemes();
                           },
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        IconButton(
-                          onPressed: () async {
-                            await shared.delete('token');
-                            await shared.delete('email');
-                            await shared.delete('senha');
-                            await shared.delete('nome');
-                            Modular.to.navigate('/login');
-                          },
-                          icon: Icon(
-                            Icons.exit_to_app,
-                            color: globalController.themes
-                                ? Color(0xFF303030)
-                                : Colors.white,
-                          ),
-                        ),
                       ],
                     ),
                   ],
@@ -169,125 +150,120 @@ class _AlunoPageState extends State<AlunoPage> {
         ),
         body: Observer(
           builder: (_) => Center(
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height * .8,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(200),
-                              topRight: Radius.circular(200),
-                            ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              colors: [
-                                Color(0xFF477BFF),
-                                Color.fromARGB(255, 74, 121, 240),
-                                Color.fromARGB(213, 84, 245, 207),
-                                Color(0xFF54F5CF),
-                              ],
-                            ),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * .7,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(200),
+                            topRight: Radius.circular(200),
                           ),
-                          child: Column(
-                            children: [
-                              if (alunoController.state == 'success')
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.3,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: Lottie.asset(
-                                          'assets/sa.json',
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.3,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.2,
-                                          repeat: true,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Text('Presença contabilizada!'),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              if (alunoController.state == 'escanear')
-                                Lottie.asset(
-                                  'assets/nfc_phone.json',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.3,
-                                ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              if (alunoController.state != 'escanear' &&
-                                  alunoController.state != 'success')
-                                GestureDetector(
-                                  onTap: () async {
-                                    alunoController.setStateFunc('escanear');
-                                    await read();
-                                  },
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.3,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.7,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.1),
-                                          spreadRadius: 2,
-                                          blurRadius: 10,
-                                          offset: Offset(0,
-                                              3), // changes position of shadow
-                                        ),
-                                      ],
-                                      color: Color(0xFF477BFF),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Center(
-                                      child: Text("Tap",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.2,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ),
-                                ),
-                              if (alunoController.state == 'escanear')
-                                IconButton(
-                                  onPressed: () {
-                                    NfcManager.instance.stopSession();
-                                    alunoController.setStateFunc('pause');
-                                  },
-                                  icon: Icon(Icons.close),
-                                ),
+                          gradient: LinearGradient(
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                            colors: [
+                              Color(0xFF477BFF),
+                              Color.fromARGB(255, 74, 121, 240),
+                              Color.fromARGB(213, 84, 245, 207),
+                              Color(0xFF54F5CF),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                        child: Column(
+                          children: [
+                            if (alunoController.state == 'success')
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Lottie.asset(
+                                        'assets/sa.json',
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.3,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.2,
+                                        repeat: true,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Text('Presença contabilizada!'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            if (alunoController.state == 'escanear')
+                              Lottie.asset(
+                                'assets/nfc_phone.json',
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                              ),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            if (alunoController.state != 'escanear' &&
+                                alunoController.state != 'success')
+                              GestureDetector(
+                                onTap: () async {
+                                  alunoController.setStateFunc('escanear');
+                                  await read();
+                                },
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.35,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        spreadRadius: 2,
+                                        blurRadius: 10,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                    color: Color(0xFF477BFF),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: Text("Tap",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.2,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ),
+                              ),
+                            if (alunoController.state == 'escanear')
+                              IconButton(
+                                onPressed: () {
+                                  NfcManager.instance.stopSession();
+                                  alunoController.setStateFunc('pause');
+                                },
+                                icon: Icon(Icons.close),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

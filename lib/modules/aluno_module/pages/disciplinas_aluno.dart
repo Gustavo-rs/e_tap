@@ -59,44 +59,6 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                         ],
                       ),
                     ),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.decelerate,
-                        width: 40,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50.0),
-                          color: globalController.themes
-                              ? Color(0xFF303030)
-                              : Colors.white,
-                        ),
-                        child: AnimatedAlign(
-                          duration: const Duration(milliseconds: 300),
-                          alignment: globalController.themes
-                              ? Alignment.centerRight
-                              : Alignment.centerLeft,
-                          curve: Curves.decelerate,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Container(
-                              width: 15,
-                              height: 15,
-                              decoration: BoxDecoration(
-                                color: globalController.themes
-                                    ? Colors.white
-                                    : Color(0xFF303030),
-                                borderRadius: BorderRadius.circular(100.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        globalController.changeThemes();
-                      },
-                    ),
                   ],
                 ),
               ),
@@ -127,9 +89,6 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                       ],
                     ),
                   ),
-                  child: Column(
-                    children: [],
-                  ),
                 ),
               ],
             ),
@@ -144,9 +103,9 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                 ),
               ),
             ),
-            Observer(
-              builder: (_) => SingleChildScrollView(
-                child: Column(
+            SingleChildScrollView(
+              child: Observer(
+                builder: (_) => Column(
                   children: [
                     Center(
                       child: Text("Disciplinas",
@@ -169,9 +128,10 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                           ),
                         ),
                       ),
-                    if (alunoController.isVazio)
+                    if (alunoController.isVazio &&
+                        !alunoController.isMateriaLoad)
                       Center(
-                        child: Text("Nenhuma disciplina encontrada",
+                        child: Text("Nenhuma disciplina encontrada!",
                             style: TextStyle(
                                 color: globalController.themes
                                     ? Color(0xFF303030)
@@ -179,8 +139,8 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20)),
                       ),
-                    if (!alunoController.isVazio &&
-                        !alunoController.isMateriaLoad)
+                    if (!alunoController.isMateriaLoad &&
+                        !alunoController.isVazio)
                       ListView.builder(
                           itemCount:
                               alunoController.materiasAlunos.subjects!.length,
@@ -249,7 +209,7 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                   ],
                 ),
               ),
-            )
+            ),
           ]),
         ),
         floatingActionButton: Container(

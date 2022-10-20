@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:app/modules/login/model/login_model.dart';
-import 'package:app/modules/login/service/i_login.dart';
+import 'package:app/modules/login_module/model/login_model.dart';
+import 'package:app/modules/login_module/service/i_login.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 

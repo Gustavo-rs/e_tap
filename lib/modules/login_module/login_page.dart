@@ -1,5 +1,5 @@
 import 'package:app/core/components/app_text_form.dart';
-import 'package:app/modules/login/controller/login_controller.dart';
+import 'package:app/modules/login_module/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -54,11 +54,11 @@ class LoginPage extends StatelessWidget {
               Text("e-Tap",
                   style: TextStyle(
                     color: Color(0xFF477BFF),
-                    fontSize: MediaQuery.of(context).size.width * 0.15,
+                    fontSize: MediaQuery.of(context).size.width * 0.18,
                     fontWeight: FontWeight.bold,
                   )),
               SizedBox(
-                height: 40,
+                height: 60,
               ),
               Center(
                 child: Container(
@@ -105,14 +105,14 @@ class LoginPage extends StatelessWidget {
                                   )
                                 : Container(
                                     width:
-                                        MediaQuery.of(context).size.width * 0.3,
+                                        MediaQuery.of(context).size.width * 0.9,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Color(0xFF477BFF),
                                         padding: const EdgeInsets.all(12),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20),
+                                              BorderRadius.circular(12),
                                         ),
                                       ),
                                       onPressed: () {

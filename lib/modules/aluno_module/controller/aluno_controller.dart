@@ -65,7 +65,7 @@ abstract class _AlunoController with Store {
     String id = await shared.read('id') as String;
     final data = await alunoImpl.getMaterias(id);
     if (data.student == 'error') {
-      isHorasVazio = true;
+      isVazio = true;
     }
     materiasAlunos = data;
     isMateriaLoad = false;

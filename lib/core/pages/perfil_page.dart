@@ -1,4 +1,5 @@
 import 'package:app/core/controller/global_controller.dart';
+import 'package:app/core/util/shared_impl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,6 +14,7 @@ class PerfilPage extends StatefulWidget {
 
 class _PerfilPageState extends State<PerfilPage> {
   final globalController = Modular.get<GlobalController>();
+  final shared = Modular.get<LocalStorageServiceImp>();
 
   @override
   void initState() {
@@ -32,62 +34,36 @@ class _PerfilPageState extends State<PerfilPage> {
           actions: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: globalController.themes
-                            ? Color(0xFF303030)
-                            : Colors.white,
-                      ),
-                      onPressed: () {
-                        Modular.to.pop();
-                      },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: globalController.themes
+                          ? Color(0xFF303030)
+                          : Colors.white,
                     ),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.decelerate,
-                        width: 40,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50.0),
-                          color: globalController.themes
-                              ? Color(0xFF303030)
-                              : Colors.white,
-                        ),
-                        child: AnimatedAlign(
-                          duration: const Duration(milliseconds: 300),
-                          alignment: globalController.themes
-                              ? Alignment.centerRight
-                              : Alignment.centerLeft,
-                          curve: Curves.decelerate,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Container(
-                              width: 15,
-                              height: 15,
-                              decoration: BoxDecoration(
-                                color: globalController.themes
-                                    ? Colors.white
-                                    : Color(0xFF303030),
-                                borderRadius: BorderRadius.circular(100.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        globalController.changeThemes();
-                      },
+                    onPressed: () {
+                      Modular.to.pop();
+                    },
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      await shared.delete('token');
+                      await shared.delete('email');
+                      await shared.delete('senha');
+                      await shared.delete('nome');
+                      Modular.to.navigate('/login_module/');
+                    },
+                    icon: Icon(
+                      Icons.exit_to_app,
+                      color: globalController.themes
+                          ? Color(0xFF303030)
+                          : Colors.white,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             )
           ],
@@ -129,45 +105,49 @@ class _PerfilPageState extends State<PerfilPage> {
                 ),
               ),
             ),
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height * 0.4,
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage('assets/images/perfil.jpg'),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          globalController.nome,
-                          style: TextStyle(
-                              color: globalController.themes
-                                  ? Color(0xFF303030)
-                                  : Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          globalController.email,
-                          style: TextStyle(
-                              color: globalController.themes
-                                  ? Color(0xFF303030)
-                                  : Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ],
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.8,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CircleAvatar(
+                        radius: 60,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: AssetImage('assets/images/perfil.jpg'),
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            globalController.nome,
+                            style: TextStyle(
+                                color: globalController.themes
+                                    ? Color(0xFF303030)
+                                    : Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            globalController.email,
+                            style: TextStyle(
+                                color: globalController.themes
+                                    ? Color(0xFF303030)
+                                    : Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )
