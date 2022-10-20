@@ -21,7 +21,7 @@ abstract class _GlobalController with Store {
   @observable
   String token = '';
 
-  @observable
+  @action
   Future<void> sharedEmailSenha() async {
     email = await shared.read('email') as String;
     nome = await shared.read('nome') as String;

@@ -1,25 +1,26 @@
 import 'package:app/core/controller/global_controller.dart';
-import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
-import 'package:app/modules/aluno_module/pages/data_horarios_aluno.dart';
+import 'package:app/modules/professor_module/controller/professor_controller.dart';
+import 'package:app/modules/professor_module/pages/infos_disciplinas_professor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class DisciplinasAluno extends StatefulWidget {
-  const DisciplinasAluno({Key? key}) : super(key: key);
+class DisciplinasProfessorPage extends StatefulWidget {
+  const DisciplinasProfessorPage({Key? key}) : super(key: key);
 
   @override
-  State<DisciplinasAluno> createState() => _DisciplinasAlunoState();
+  State<DisciplinasProfessorPage> createState() =>
+      _DisciplinasProfessorPageState();
 }
 
-class _DisciplinasAlunoState extends State<DisciplinasAluno> {
-  final alunoController = Modular.get<AlunoController>();
+class _DisciplinasProfessorPageState extends State<DisciplinasProfessorPage> {
   final globalController = Modular.get<GlobalController>();
+  final professorController = Modular.get<ProfessorController>();
 
   @override
   void initState() {
-    alunoController.getMateriasAluno();
+    professorController.setDisciplinasProfessor();
     super.initState();
   }
 
@@ -116,7 +117,7 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                               fontWeight: FontWeight.bold,
                               fontSize: 30)),
                     ),
-                    if (alunoController.isMateriaLoad)
+                    if (professorController.isMateriaLoad)
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.7,
                         child: Center(
@@ -128,8 +129,8 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                           ),
                         ),
                       ),
-                    if (alunoController.isVazio &&
-                        !alunoController.isMateriaLoad)
+                    if (professorController.isVazio &&
+                        !professorController.isMateriaLoad)
                       Center(
                         child: Text("Nenhuma disciplina encontrada!",
                             style: TextStyle(
@@ -139,11 +140,9 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20)),
                       ),
-                    if (!alunoController.isMateriaLoad &&
-                        !alunoController.isVazio)
+                    if (!professorController.isMateriaLoad)
                       ListView.builder(
-                        itemCount:
-                            alunoController.materiasAlunos.subjects!.length,
+                        itemCount: professorController.discProfessor.length,
                         shrinkWrap: true,
                         itemBuilder: ((context, index) {
                           return GestureDetector(
@@ -164,16 +163,11 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 .9,
-                                        child: DataHorariosAluno(
-                                            id_disciplina: alunoController
-                                                .materiasAlunos
-                                                .subjects![index]
-                                                .subjectId
-                                                .toString(),
-                                            nome_disciplina: alunoController
-                                                .materiasAlunos
-                                                .subjects![index]
-                                                .subjectName!),
+                                        child: InfosDisciplinasProfessor(
+                                          nome_disciplina: professorController
+                                              .discProfessor[index]
+                                              .subjectName!,
+                                        ),
                                       ));
                             },
                             child: Padding(
@@ -191,8 +185,15 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: ListTile(
                                     title: Text(
-                                        alunoController.materiasAlunos
-                                            .subjects![index].subjectName!,
+                                        "${professorController.discProfessor[index].subjectName}",
+                                        style: TextStyle(
+                                            color: globalController.themes
+                                                ? Color(0xFF303030)
+                                                : Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16)),
+                                    trailing: Text(
+                                        "Tag: ${professorController.discProfessor[index].tagId}",
                                         style: TextStyle(
                                             color: globalController.themes
                                                 ? Color(0xFF303030)
@@ -219,16 +220,14 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
             children: [
               GestureDetector(
                 onTap: () {
-                  alunoController.changeSelectedPage(0);
-                  Modular.to.navigate('/aluno_module/');
+                  // alunoController.changeSelectedPage(0);
+                  Modular.to.navigate('/professor_module/');
                 },
                 child: Container(
-                  decoration: alunoController.isSelectedPage == 0
-                      ? BoxDecoration(
-                          color: Colors.black.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(10),
-                        )
-                      : null,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
@@ -240,12 +239,10 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                 ),
               ),
               Container(
-                decoration: alunoController.isSelectedPage == 1
-                    ? BoxDecoration(
-                        color: Colors.black.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(10),
-                      )
-                    : null,
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(

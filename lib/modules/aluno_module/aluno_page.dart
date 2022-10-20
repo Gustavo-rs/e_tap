@@ -1,6 +1,5 @@
 import 'package:app/core/components/app_snackbar.dart';
 import 'package:app/core/controller/global_controller.dart';
-import 'package:app/core/util/shared_impl.dart';
 import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
 import 'package:app/modules/aluno_module/model/record.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +49,7 @@ class _AlunoPageState extends State<AlunoPage> {
   @override
   void initState() {
     alunoController.setStateFunc('pause');
+    globalController.sharedEmailSenha();
     super.initState();
   }
 
@@ -87,7 +87,7 @@ class _AlunoPageState extends State<AlunoPage> {
                                 : Colors.white,
                           ),
                           SizedBox(width: 10),
-                          Text("Usuario",
+                          Text("${globalController.nome.split(' ')[0]}",
                               style: TextStyle(
                                   color: globalController.themes
                                       ? Color(0xFF303030)

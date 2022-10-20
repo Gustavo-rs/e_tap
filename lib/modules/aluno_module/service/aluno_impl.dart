@@ -39,12 +39,12 @@ class AlunoImpl extends IAlunoService {
 
   @override
   Future<MateriaAlunoModel> getMaterias(String id_aluno) async {
-    String? token = await shared.read('token');
+    final token = await shared.read('token');
     try {
       final url = Uri.parse(
           "https://projeto-integrador-production.up.railway.app/student/list/subjects/$id_aluno/");
       final resposta = await http.get(url, headers: {
-        "Authorization": 'Bearer $token!',
+        "Authorization": 'Bearer $token',
       });
 
       if (resposta.body.contains('error') ||

@@ -1,13 +1,10 @@
-import 'package:app/core/components/app_snackbar.dart';
 import 'package:app/core/controller/global_controller.dart';
-import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
 import 'package:app/modules/aluno_module/model/record.dart';
 import 'package:app/modules/professor_module/controller/professor_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
 class ProfessorPage extends StatefulWidget {
@@ -110,77 +107,76 @@ class _ProfessorPageState extends State<ProfessorPage> {
         ),
         body: Observer(
           builder: (_) => Center(
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height * .8,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(200),
-                              topRight: Radius.circular(200),
-                            ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              colors: [
-                                Color(0xFF477BFF),
-                                Color.fromARGB(255, 74, 121, 240),
-                                Color.fromARGB(213, 84, 245, 207),
-                                Color(0xFF54F5CF),
-                              ],
-                            ),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * .75,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(200),
+                            topRight: Radius.circular(200),
                           ),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.3,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.7,
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        spreadRadius: 2,
-                                        blurRadius: 10,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                    color: Color(0xFF477BFF),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Iniciar Chamada",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.1,
-                                          fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                          gradient: LinearGradient(
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                            colors: [
+                              Color(0xFF477BFF),
+                              Color.fromARGB(255, 74, 121, 240),
+                              Color.fromARGB(213, 84, 245, 207),
+                              Color(0xFF54F5CF),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.35,
+                                width: MediaQuery.of(context).size.width * 0.75,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: Color(0xFF477BFF),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Iniciar Chamada",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.1,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
@@ -207,7 +203,8 @@ class _ProfessorPageState extends State<ProfessorPage> {
               GestureDetector(
                 onTap: () {
                   // alunoController.changeSelectedPage(1);
-                  Modular.to.navigate('/aluno_module/disciplinas_aluno');
+                  Modular.to
+                      .navigate('/professor_module/disciplinas_professor');
                 },
                 child: Container(
                   decoration: BoxDecoration(

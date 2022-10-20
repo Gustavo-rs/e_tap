@@ -73,10 +73,12 @@ mixin _$GlobalController on _GlobalController, Store {
     });
   }
 
+  late final _$sharedEmailSenhaAsyncAction =
+      AsyncAction('_GlobalController.sharedEmailSenha', context: context);
+
   @override
-  ObservableFuture<void> sharedEmailSenha() {
-    final _$future = super.sharedEmailSenha();
-    return ObservableFuture<void>(_$future, context: context);
+  Future<void> sharedEmailSenha() {
+    return _$sharedEmailSenhaAsyncAction.run(() => super.sharedEmailSenha());
   }
 
   late final _$_GlobalControllerActionController =
