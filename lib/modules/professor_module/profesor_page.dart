@@ -17,6 +17,12 @@ class _ProfessorPageState extends State<ProfessorPage> {
   final globalController = Modular.get<GlobalController>();
 
   @override
+  void initState() {
+    globalController.sharedEmailSenha();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => Scaffold(
@@ -44,7 +50,7 @@ class _ProfessorPageState extends State<ProfessorPage> {
                                 : Colors.white,
                           ),
                           SizedBox(width: 10),
-                          Text("Usuário",
+                          Text("${globalController.nome.split(' ')[0]}",
                               style: TextStyle(
                                   color: globalController.themes
                                       ? Color(0xFF303030)
@@ -164,7 +170,7 @@ class _ProfessorPageState extends State<ProfessorPage> {
                                         color: Colors.white,
                                         fontSize:
                                             MediaQuery.of(context).size.width *
-                                                0.1,
+                                                .085,
                                         fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
@@ -202,22 +208,15 @@ class _ProfessorPageState extends State<ProfessorPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  // alunoController.changeSelectedPage(1);
                   Modular.to
                       .navigate('/professor_module/disciplinas_professor');
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.list_alt,
-                      color: Colors.white,
-                      size: 50,
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
+                    size: 50,
                   ),
                 ),
               ),

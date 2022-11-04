@@ -54,6 +54,7 @@ class _PerfilPageState extends State<PerfilPage> {
                       await shared.delete('email');
                       await shared.delete('senha');
                       await shared.delete('nome');
+                      await shared.delete('id');
                       Modular.to.navigate('/login_module/');
                     },
                     icon: Icon(

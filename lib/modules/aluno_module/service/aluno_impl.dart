@@ -16,11 +16,12 @@ class AlunoImpl extends IAlunoService {
   Future<List<DataHorasAlunoModel>> getDataHorasAluno(
       String id_aluno, String disciplina) async {
     String? token = await shared.read('token');
+    print("TOKENZADA" + token.toString());
     try {
       final url = Uri.parse(
           "https://projeto-integrador-production.up.railway.app/student/subject/call/$id_aluno/$disciplina/");
       final resposta = await http.get(url, headers: {
-        "Authorization": 'Bearer $token!',
+        "Authorization": 'Bearer $token',
       });
 
       if (resposta.statusCode == 200) {
@@ -58,6 +59,27 @@ class AlunoImpl extends IAlunoService {
     } on PlatformException catch (e) {
       log(e.toString());
       return MateriaAlunoModel();
+    }
+  }
+
+  @override
+  Future<String> callAluno() async {
+    final token = await shared.read('token');
+    final id_aluno = await shared.read('id');
+    final json = '{"id_student": $id_aluno,"tag_id": "128"}';
+    try {
+      final url = Uri.parse(
+          "https://projeto-integrador-production.up.railway.app/student/call/");
+      final resposta = await http.post(url,
+          headers: {
+            "Authorization": 'Bearer $token',
+          },
+          body: json);
+
+      return resposta.body;
+    } on PlatformException catch (e) {
+      log(e.toString());
+      return 'Error';
     }
   }
 }

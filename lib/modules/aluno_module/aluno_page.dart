@@ -32,6 +32,7 @@ class _AlunoPageState extends State<AlunoPage> {
 
             alunoController.setNdefWidgets(info.hash);
             if (alunoController.ndefWidgets == '12345') {
+              alunoController.callAluno();
               alunoController.setStateFunc('success');
               Future.delayed(const Duration(seconds: 4), () {
                 alunoController.setStateFunc('default');

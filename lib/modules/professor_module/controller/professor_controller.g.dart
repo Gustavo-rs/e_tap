@@ -9,6 +9,22 @@ part of 'professor_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ProfessorController on _ProfessorController, Store {
+  late final _$isLoadAtom =
+      Atom(name: '_ProfessorController.isLoad', context: context);
+
+  @override
+  bool get isLoad {
+    _$isLoadAtom.reportRead();
+    return super.isLoad;
+  }
+
+  @override
+  set isLoad(bool value) {
+    _$isLoadAtom.reportWrite(value, super.isLoad, () {
+      super.isLoad = value;
+    });
+  }
+
   late final _$isMateriaLoadAtom =
       Atom(name: '_ProfessorController.isMateriaLoad', context: context);
 
@@ -38,6 +54,22 @@ mixin _$ProfessorController on _ProfessorController, Store {
   set isVazio(bool value) {
     _$isVazioAtom.reportWrite(value, super.isVazio, () {
       super.isVazio = value;
+    });
+  }
+
+  late final _$isVazioDiscAtom =
+      Atom(name: '_ProfessorController.isVazioDisc', context: context);
+
+  @override
+  bool get isVazioDisc {
+    _$isVazioDiscAtom.reportRead();
+    return super.isVazioDisc;
+  }
+
+  @override
+  set isVazioDisc(bool value) {
+    _$isVazioDiscAtom.reportWrite(value, super.isVazioDisc, () {
+      super.isVazioDisc = value;
     });
   }
 
@@ -73,6 +105,22 @@ mixin _$ProfessorController on _ProfessorController, Store {
     });
   }
 
+  late final _$listAlunosMateriaAtom =
+      Atom(name: '_ProfessorController.listAlunosMateria', context: context);
+
+  @override
+  ListaAlunosMateria get listAlunosMateria {
+    _$listAlunosMateriaAtom.reportRead();
+    return super.listAlunosMateria;
+  }
+
+  @override
+  set listAlunosMateria(ListaAlunosMateria value) {
+    _$listAlunosMateriaAtom.reportWrite(value, super.listAlunosMateria, () {
+      super.listAlunosMateria = value;
+    });
+  }
+
   late final _$setDisciplinasProfessorAsyncAction = AsyncAction(
       '_ProfessorController.setDisciplinasProfessor',
       context: context);
@@ -81,6 +129,16 @@ mixin _$ProfessorController on _ProfessorController, Store {
   Future<void> setDisciplinasProfessor() {
     return _$setDisciplinasProfessorAsyncAction
         .run(() => super.setDisciplinasProfessor());
+  }
+
+  late final _$setListaAlunosMateriaAsyncAction = AsyncAction(
+      '_ProfessorController.setListaAlunosMateria',
+      context: context);
+
+  @override
+  Future<void> setListaAlunosMateria(int id) {
+    return _$setListaAlunosMateriaAsyncAction
+        .run(() => super.setListaAlunosMateria(id));
   }
 
   late final _$_ProfessorControllerActionController =
@@ -100,10 +158,13 @@ mixin _$ProfessorController on _ProfessorController, Store {
   @override
   String toString() {
     return '''
+isLoad: ${isLoad},
 isMateriaLoad: ${isMateriaLoad},
 isVazio: ${isVazio},
+isVazioDisc: ${isVazioDisc},
 isSelectedPage: ${isSelectedPage},
-discProfessor: ${discProfessor}
+discProfessor: ${discProfessor},
+listAlunosMateria: ${listAlunosMateria}
     ''';
   }
 }

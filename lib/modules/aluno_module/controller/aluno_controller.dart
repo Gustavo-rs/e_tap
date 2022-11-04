@@ -77,9 +77,18 @@ abstract class _AlunoController with Store {
     String id_aluno = await shared.read('id') as String;
     final data = await alunoImpl.getDataHorasAluno(id_aluno, id_disciplina);
 
-    if (data == []) {}
+    if (data.isEmpty) {
+      isHorasVazio = true;
+    } else {
+      isHorasVazio = false;
+    }
 
     isLoad = false;
     dataHorasAluno = data[0];
+  }
+
+  @action
+  Future<void> callAluno() async {
+    String status = await alunoImpl.callAluno();
   }
 }

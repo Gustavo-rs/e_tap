@@ -129,7 +129,7 @@ class _DisciplinasProfessorPageState extends State<DisciplinasProfessorPage> {
                           ),
                         ),
                       ),
-                    if (professorController.isVazio &&
+                    if (professorController.isVazioDisc &&
                         !professorController.isMateriaLoad)
                       Center(
                         child: Text("Nenhuma disciplina encontrada!",
@@ -164,6 +164,8 @@ class _DisciplinasProfessorPageState extends State<DisciplinasProfessorPage> {
                                             MediaQuery.of(context).size.height *
                                                 .9,
                                         child: InfosDisciplinasProfessor(
+                                          id_disciplina: professorController
+                                              .discProfessor[index].id!,
                                           nome_disciplina: professorController
                                               .discProfessor[index]
                                               .subjectName!,
@@ -220,21 +222,14 @@ class _DisciplinasProfessorPageState extends State<DisciplinasProfessorPage> {
             children: [
               GestureDetector(
                 onTap: () {
-                  // alunoController.changeSelectedPage(0);
                   Modular.to.navigate('/professor_module/');
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.home,
-                      color: Colors.white,
-                      size: 50,
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.home,
+                    color: Colors.white,
+                    size: 50,
                   ),
                 ),
               ),

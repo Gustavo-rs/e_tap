@@ -6,4 +6,6 @@ abstract class IAlunoService {
       String disciplina, String id_aluno);
 
   Future<MateriaAlunoModel> getMaterias(String id_aluno);
+
+  Future<void> callAluno();
 }

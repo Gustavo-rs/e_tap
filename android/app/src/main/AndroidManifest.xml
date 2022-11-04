@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.naokiokada.nfcmanager">
     <uses-permission android:name="android.permission.NFC"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
-        android:label="NFC Manager"
+        android:label="e-Tap"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name="com.naokiokada.nfcmanager.MainActivity"

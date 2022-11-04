@@ -185,6 +185,14 @@ mixin _$AlunoController on _AlunoController, Store {
     return _$dateHoursAsyncAction.run(() => super.dateHours(id_disciplina));
   }
 
+  late final _$callAlunoAsyncAction =
+      AsyncAction('_AlunoController.callAluno', context: context);
+
+  @override
+  Future<void> callAluno() {
+    return _$callAlunoAsyncAction.run(() => super.callAluno());
+  }
+
   late final _$_AlunoControllerActionController =
       ActionController(name: '_AlunoController', context: context);
 
