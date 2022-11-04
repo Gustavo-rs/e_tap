@@ -1,4 +1,7 @@
+import 'package:app/core/components/app_snackbar.dart';
+import 'package:app/core/service/global_impl.dart';
 import 'package:app/core/util/shared_impl.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -8,6 +11,11 @@ class GlobalController = _GlobalController with _$GlobalController;
 
 abstract class _GlobalController with Store {
   final shared = Modular.get<LocalStorageServiceImp>();
+  final globalImpl = GlobalImpl();
+
+  final email_controller = TextEditingController();
+  final old_password_controller = TextEditingController();
+  final new_password_controller = TextEditingController();
 
   @observable
   bool themes = true;
@@ -22,6 +30,12 @@ abstract class _GlobalController with Store {
   String token = '';
 
   @action
+  Future<void> emailInsert() async {
+    final emailShared = await shared.read('email');
+    email_controller.text = emailShared!;
+  }
+
+  @action
   Future<void> sharedEmailSenha() async {
     email = await shared.read('email') as String;
     nome = await shared.read('nome') as String;
@@ -29,4 +43,18 @@ abstract class _GlobalController with Store {
 
   @action
   void changeThemes() => themes = !themes;
+
+  @action
+  Future<void> trocarSenhaUser(BuildContext context) async {
+    final email = shared.read('email');
+
+    String resposta = await globalImpl.trocarSenha(email.toString(),
+        old_password_controller.text, new_password_controller.text);
+
+    if (resposta == 'success') {
+      AppSnackbar.success(context, 'Senha alterada com sucesso!');
+    } else {
+      AppSnackbar.error(context, 'Senha antiga incorreta!');
+    }
+  }
 }

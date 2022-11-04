@@ -1,5 +1,6 @@
 import 'package:app/core/pages/perfil_page.dart';
 import 'package:app/core/controller/global_controller.dart';
+import 'package:app/core/pages/trocar_senha_page.dart';
 import 'package:app/core/util/shared_impl.dart';
 import 'package:app/modules/aluno_module/aluno_module.dart';
 import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
@@ -20,6 +21,10 @@ class AppModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute('/perfil_page',
             child: (_, args) => const PerfilPage(),
+            transition: TransitionType.downToUp,
+            duration: const Duration(milliseconds: 800)),
+        ChildRoute('/trocar_senha',
+            child: (_, args) => const TrocarSenhaPage(),
             transition: TransitionType.downToUp,
             duration: const Duration(milliseconds: 800)),
         ChildRoute('/', child: (_, args) => const SplashPage()),

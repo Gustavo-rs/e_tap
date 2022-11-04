@@ -23,6 +23,7 @@ dependencies:
   http: ^0.13.5
   shared_preferences: ^2.0.15
   top_snackbar_flutter: ^2.1.1
+  validatorless: ^1.2.1
 
 dev_dependencies:
   flutter_test:

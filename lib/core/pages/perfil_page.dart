@@ -107,49 +107,70 @@ class _PerfilPageState extends State<PerfilPage> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.7,
               width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                        radius: 60,
-                        backgroundColor: Colors.transparent,
-                        backgroundImage: AssetImage('assets/images/perfil.jpg'),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      Column(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(
-                            globalController.nome,
-                            style: TextStyle(
-                                color: globalController.themes
-                                    ? Color(0xFF303030)
-                                    : Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                          CircleAvatar(
+                            radius: 60,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage:
+                                AssetImage('assets/images/perfil.jpg'),
                           ),
-                          Text(
-                            globalController.email,
-                            style: TextStyle(
-                                color: globalController.themes
-                                    ? Color(0xFF303030)
-                                    : Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
+                          Column(
+                            children: [
+                              Text(
+                                globalController.nome,
+                                style: TextStyle(
+                                    color: globalController.themes
+                                        ? Color(0xFF303030)
+                                        : Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                globalController.email,
+                                style: TextStyle(
+                                    color: globalController.themes
+                                        ? Color(0xFF303030)
+                                        : Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Modular.to.pushNamed('/trocar_senha');
+                    },
+                    child: Text('Trocar senha?',
+                        style: TextStyle(
+                            color: globalController.themes
+                                ? Color(0xFF303030)
+                                : Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ],
               ),
             )
           ]),

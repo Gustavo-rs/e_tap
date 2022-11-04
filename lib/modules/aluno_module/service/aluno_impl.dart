@@ -16,7 +16,6 @@ class AlunoImpl extends IAlunoService {
   Future<List<DataHorasAlunoModel>> getDataHorasAluno(
       String id_aluno, String disciplina) async {
     String? token = await shared.read('token');
-    print("TOKENZADA" + token.toString());
     try {
       final url = Uri.parse(
           "https://projeto-integrador-production.up.railway.app/student/subject/call/$id_aluno/$disciplina/");

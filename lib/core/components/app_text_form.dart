@@ -6,12 +6,14 @@ class AppTextFormField extends TextFormField {
   final TextEditingController controller;
   final Widget? suffixIcon;
   final bool? obscureText;
+  final String? Function(String?)? validator;
   AppTextFormField(
       {Key? key,
       this.hintText,
       this.iconData,
       required this.controller,
       this.obscureText = false,
+      this.validator,
       this.suffixIcon})
       : super(
           key: key,
@@ -19,6 +21,7 @@ class AppTextFormField extends TextFormField {
             color: Colors.grey[700],
           ),
           cursorColor: Color(0xFF477BFF),
+          validator: validator,
           controller: controller,
           obscureText: obscureText ?? false,
           decoration: InputDecoration(
