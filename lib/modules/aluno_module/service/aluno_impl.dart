@@ -23,12 +23,14 @@ class AlunoImpl extends IAlunoService {
         "Authorization": 'Bearer $token',
       });
 
-      if (resposta.statusCode == 200) {
+      if (resposta.statusCode == 200 && !resposta.body.contains("Traceback")) {
         List jsonResponse = json.decode(resposta.body);
         return jsonResponse
             .map((e) => DataHorasAlunoModel.fromJson(e))
             .toList();
       }
+
+      print(resposta.body);
 
       return [];
     } on PlatformException catch (e) {

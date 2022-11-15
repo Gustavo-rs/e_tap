@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginController = Modular.get<LoginController>();
     loginController.email_controller.text = 'alunoteste@gmail.com';
-    loginController.senha_controller.text = 'senha123';
+    loginController.senha_controller.text = 'senhateste';
 
     return Scaffold(
       body: Container(

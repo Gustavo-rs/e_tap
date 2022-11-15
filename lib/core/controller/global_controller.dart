@@ -29,6 +29,15 @@ abstract class _GlobalController with Store {
   @observable
   String token = '';
 
+  @observable
+  bool isTrocaSenhaLoad = false;
+
+  @observable
+  bool hiddenShowPass = false;
+
+  @action
+  void changeObscureText() => hiddenShowPass = !hiddenShowPass;
+
   @action
   Future<void> emailInsert() async {
     final emailShared = await shared.read('email');
@@ -46,15 +55,22 @@ abstract class _GlobalController with Store {
 
   @action
   Future<void> trocarSenhaUser(BuildContext context) async {
-    final email = shared.read('email');
+    // email_controller.text = shared.read('email') as String;
 
-    String resposta = await globalImpl.trocarSenha(email.toString(),
-        old_password_controller.text, new_password_controller.text);
-
-    if (resposta == 'success') {
-      AppSnackbar.success(context, 'Senha alterada com sucesso!');
+    if (email_controller.text.isEmpty ||
+        old_password_controller.text.isEmpty ||
+        new_password_controller.text.isEmpty) {
+      AppSnackbar.error(context, 'Preencha todos os campos');
     } else {
-      AppSnackbar.error(context, 'Senha antiga incorreta!');
+      isTrocaSenhaLoad = true;
+      String resposta = await globalImpl.trocarSenha(email_controller.text,
+          old_password_controller.text, new_password_controller.text);
+      isTrocaSenhaLoad = false;
+      if (resposta == 'success') {
+        AppSnackbar.success(context, 'Senha alterada com sucesso!');
+      } else {
+        AppSnackbar.error(context, 'Não foi possível trocar sua senha!');
+      }
     }
   }
 }

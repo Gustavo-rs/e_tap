@@ -73,6 +73,46 @@ mixin _$GlobalController on _GlobalController, Store {
     });
   }
 
+  late final _$isTrocaSenhaLoadAtom =
+      Atom(name: '_GlobalController.isTrocaSenhaLoad', context: context);
+
+  @override
+  bool get isTrocaSenhaLoad {
+    _$isTrocaSenhaLoadAtom.reportRead();
+    return super.isTrocaSenhaLoad;
+  }
+
+  @override
+  set isTrocaSenhaLoad(bool value) {
+    _$isTrocaSenhaLoadAtom.reportWrite(value, super.isTrocaSenhaLoad, () {
+      super.isTrocaSenhaLoad = value;
+    });
+  }
+
+  late final _$hiddenShowPassAtom =
+      Atom(name: '_GlobalController.hiddenShowPass', context: context);
+
+  @override
+  bool get hiddenShowPass {
+    _$hiddenShowPassAtom.reportRead();
+    return super.hiddenShowPass;
+  }
+
+  @override
+  set hiddenShowPass(bool value) {
+    _$hiddenShowPassAtom.reportWrite(value, super.hiddenShowPass, () {
+      super.hiddenShowPass = value;
+    });
+  }
+
+  late final _$emailInsertAsyncAction =
+      AsyncAction('_GlobalController.emailInsert', context: context);
+
+  @override
+  Future<void> emailInsert() {
+    return _$emailInsertAsyncAction.run(() => super.emailInsert());
+  }
+
   late final _$sharedEmailSenhaAsyncAction =
       AsyncAction('_GlobalController.sharedEmailSenha', context: context);
 
@@ -81,8 +121,28 @@ mixin _$GlobalController on _GlobalController, Store {
     return _$sharedEmailSenhaAsyncAction.run(() => super.sharedEmailSenha());
   }
 
+  late final _$trocarSenhaUserAsyncAction =
+      AsyncAction('_GlobalController.trocarSenhaUser', context: context);
+
+  @override
+  Future<void> trocarSenhaUser(BuildContext context) {
+    return _$trocarSenhaUserAsyncAction
+        .run(() => super.trocarSenhaUser(context));
+  }
+
   late final _$_GlobalControllerActionController =
       ActionController(name: '_GlobalController', context: context);
+
+  @override
+  void changeObscureText() {
+    final _$actionInfo = _$_GlobalControllerActionController.startAction(
+        name: '_GlobalController.changeObscureText');
+    try {
+      return super.changeObscureText();
+    } finally {
+      _$_GlobalControllerActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void changeThemes() {
@@ -101,7 +161,9 @@ mixin _$GlobalController on _GlobalController, Store {
 themes: ${themes},
 email: ${email},
 nome: ${nome},
-token: ${token}
+token: ${token},
+isTrocaSenhaLoad: ${isTrocaSenhaLoad},
+hiddenShowPass: ${hiddenShowPass}
     ''';
   }
 }

@@ -93,7 +93,7 @@ class _TrocarSenhaPageState extends State<TrocarSenhaPage> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width,
               child: Center(
                 child: Column(
@@ -111,60 +111,72 @@ class _TrocarSenhaPageState extends State<TrocarSenhaPage> {
                           horizontal: 20,
                           vertical: 0,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            AppTextFormField(
-                                validator: Validatorless.multiple(
-                                  [
-                                    Validatorless.required('Email Obrigatório'),
-                                  ],
-                                ),
-                                controller: globalController.email_controller,
-                                hintText: 'E-mail',
-                                iconData: Icons.person_outline_outlined),
-                            AppTextFormField(
-                                validator: Validatorless.multiple(
-                                  [
-                                    Validatorless.required('Senha Obrigatória'),
-                                  ],
-                                ),
-                                controller:
-                                    globalController.old_password_controller,
-                                hintText: 'Senha atual',
-                                iconData: Icons.lock_outline),
-                            AppTextFormField(
-                                validator: Validatorless.multiple(
-                                  [
-                                    Validatorless.required('Senha Obrigatória'),
-                                  ],
-                                ),
-                                controller:
-                                    globalController.new_password_controller,
-                                hintText: 'Nova Senha',
-                                iconData: Icons.lock),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF477BFF),
-                                  padding: const EdgeInsets.all(12),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
+                        child: Observer(
+                          builder: (_) => Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              AppTextFormField(
+                                  controller: globalController.email_controller,
+                                  hintText: 'E-mail',
+                                  iconData: Icons.person_outline_outlined),
+                              AppTextFormField(
+                                  controller:
+                                      globalController.old_password_controller,
+                                  hintText: 'Senha atual',
+                                  iconData: Icons.lock_outline),
+                              AppTextFormField(
+                                  obscureText: globalController.hiddenShowPass,
+                                  controller:
+                                      globalController.new_password_controller,
+                                  hintText: 'Nova Senha',
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      globalController.changeObscureText();
+                                    },
+                                    icon: globalController.hiddenShowPass
+                                        ? Icon(
+                                            Icons.visibility,
+                                            color: Colors.grey[700],
+                                          )
+                                        : Icon(
+                                            Icons.visibility_off,
+                                            color: Colors.grey[700],
+                                          ),
                                   ),
-                                ),
-                                onPressed: () {
-                                  globalController.trocarSenhaUser(context);
-                                },
-                                child: Text('Trocar Senha',
-                                    style: TextStyle(
+                                  iconData: Icons.lock),
+                              globalController.isTrocaSenhaLoad
+                                  ? CircularProgressIndicator(
                                       color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    )),
-                              ),
-                            ),
-                          ],
+                                      strokeWidth: 4,
+                                    )
+                                  : Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xFF477BFF),
+                                          padding: const EdgeInsets.all(12),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          globalController
+                                              .trocarSenhaUser(context);
+                                        },
+                                        child: Text(
+                                          'Trocar Senha',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

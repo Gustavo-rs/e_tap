@@ -15,7 +15,7 @@ class GlobalImpl implements IGlobalService {
 
     final token = await shared.read('token');
     final json =
-        '{"email": $email,"old_password": "$old_password","new_password": "$new_password"}';
+        '{"email": "$email","old_password": "$old_password","new_password": "$new_password"}';
     try {
       final url = Uri.parse(
           "https://projeto-integrador-production.up.railway.app/user/updatepassword/");
@@ -25,7 +25,9 @@ class GlobalImpl implements IGlobalService {
           },
           body: json);
 
-      print("resposta: ${resposta.body}");
+      if (resposta.statusCode != 200 || resposta.body.contains("Traceback")) {
+        return 'error';
+      }
 
       return jsonDecode(resposta.body)['status'];
     } on PlatformException catch (e) {
