@@ -5,7 +5,6 @@ import 'package:app/core/util/shared_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:validatorless/validatorless.dart';
 
 class TrocarSenhaPage extends StatefulWidget {
   const TrocarSenhaPage({Key? key}) : super(key: key);
@@ -20,6 +19,8 @@ class _TrocarSenhaPageState extends State<TrocarSenhaPage> {
 
   @override
   void initState() {
+    globalController.old_password_controller.text = '';
+    globalController.new_password_controller.text = '';
     globalController.emailInsert();
     super.initState();
   }
@@ -120,9 +121,24 @@ class _TrocarSenhaPageState extends State<TrocarSenhaPage> {
                                   hintText: 'E-mail',
                                   iconData: Icons.person_outline_outlined),
                               AppTextFormField(
+                                  obscureText: globalController.hiddenShowPass1,
                                   controller:
                                       globalController.old_password_controller,
                                   hintText: 'Senha atual',
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      globalController.changeObscureText1();
+                                    },
+                                    icon: globalController.hiddenShowPass1
+                                        ? Icon(
+                                            Icons.visibility,
+                                            color: Colors.grey[700],
+                                          )
+                                        : Icon(
+                                            Icons.visibility_off,
+                                            color: Colors.grey[700],
+                                          ),
+                                  ),
                                   iconData: Icons.lock_outline),
                               AppTextFormField(
                                   obscureText: globalController.hiddenShowPass,

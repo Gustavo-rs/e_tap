@@ -61,4 +61,28 @@ class ProfessorImpl implements IProfessor {
       return ListaAlunosMateria(students: []);
     }
   }
+
+  @override
+  Future<String> postChamada(int id_meet, List<int> chamada) async {
+    final token = await shared.read('token');
+
+    print(chamada);
+    final json = '{"id_meet": $id_meet,"sequence": $chamada}';
+    try {
+      final url = Uri.parse(
+          "https://projeto-integrador-production.up.railway.app/educator/startcall/");
+      final resposta = await http.post(url,
+          headers: {
+            "Authorization": 'Bearer $token',
+          },
+          body: json);
+
+      print(resposta.body);
+
+      return 'Success';
+    } on PlatformException catch (e) {
+      log(e.toString());
+      return "error";
+    }
+  }
 }

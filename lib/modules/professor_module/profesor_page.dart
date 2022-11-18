@@ -1,3 +1,4 @@
+import 'package:app/core/components/app_snackbar.dart';
 import 'package:app/core/controller/global_controller.dart';
 import 'package:app/modules/aluno_module/model/record.dart';
 import 'package:app/modules/professor_module/controller/professor_controller.dart';
@@ -144,39 +145,186 @@ class _ProfessorPageState extends State<ProfessorPage> {
                             SizedBox(
                               height: 40,
                             ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.35,
-                                width: MediaQuery.of(context).size.width * 0.75,
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
+                            professorController.loadChamadaProf
+                                ? Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.35,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.75,
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          spreadRadius: 2,
+                                          blurRadius: 10,
+                                          offset: Offset(0, 3),
+                                        ),
+                                      ],
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
                                     ),
-                                  ],
-                                  color: Color(0xFF477BFF),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Iniciar Chamada",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
+                                    child: Center(
+                                      child: Text(
+                                        "Aguarde...",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
                                                 .085,
-                                        fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                : GestureDetector(
+                                    onTap: () {
+                                      professorController.postChamadaProf();
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.35,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.75,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.1),
+                                            spreadRadius: 2,
+                                            blurRadius: 10,
+                                            offset: Offset(0, 3),
+                                          ),
+                                        ],
+                                        color: Color(0xFF477BFF),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Iniciar Chamada",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .085,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title:
+                                              Text("Selecione a quantidade:"),
+                                          content: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                .8,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                .15,
+                                            child: Center(
+                                              child: ListView.builder(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  shrinkWrap: true,
+                                                  itemCount: professorController
+                                                      .call.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          '${professorController.call[index]}',
+                                                          style: TextStyle(
+                                                            fontSize: 18,
+                                                            color: Color(
+                                                                0xFF107AFF),
+                                                          ),
+                                                        ),
+                                                        Observer(
+                                                          builder: (_) =>
+                                                              Checkbox(
+                                                            activeColor: Color(
+                                                                0xFF107AFF),
+                                                            value:
+                                                                professorController
+                                                                    .countCall
+                                                                    .contains(
+                                                                        index +
+                                                                            1),
+                                                            onChanged: (value) {
+                                                              professorController
+                                                                  .changeChamada(
+                                                                      value!,
+                                                                      index +
+                                                                          1);
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  }),
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  professorController.countCall
+                                                      .clear();
+                                                  Modular.to.pop();
+                                                },
+                                                child: Text("Cancelar",
+                                                    style: TextStyle(
+                                                        color: Colors.red))),
+                                            ElevatedButton(
+                                                onPressed: () {
+                                                  professorController
+                                                      .ordenarChamada();
+                                                  if (professorController
+                                                          .countCall.length ==
+                                                      0) {
+                                                    AppSnackbar.error(context,
+                                                        "Selecione pelo menos uma chamada!");
+                                                  } else {
+                                                    AppSnackbar.success(context,
+                                                        "Chamada selecionada com sucesso!");
+                                                    Modular.to.pop();
+                                                  }
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.green,
+                                                ),
+                                                child: Text("Finalizar")),
+                                          ],
+                                        );
+                                      });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xFF477BFF),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                              ),
-                            ),
+                                child: Text("Selecionar chamada"))
                           ],
                         ),
                       ),

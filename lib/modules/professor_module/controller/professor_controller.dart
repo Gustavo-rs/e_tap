@@ -30,6 +30,29 @@ abstract class _ProfessorController with Store {
   @observable
   int isSelectedPage = 0;
 
+  @observable
+  bool loadChamadaProf = false;
+
+  @observable
+  List<int> countCall = ObservableList<int>.of([]);
+
+  @observable
+  List<int> call = ObservableList<int>.of([1, 2, 3, 4]);
+
+  @action
+  void changeChamada(bool value, int index) {
+    if (value) {
+      countCall.add(index);
+    } else {
+      countCall.remove(index);
+    }
+  }
+
+  @action
+  void ordenarChamada() {
+    countCall.sort();
+  }
+
   @action
   void changeSelectedPage(int value) {
     isSelectedPage = value;
@@ -66,5 +89,12 @@ abstract class _ProfessorController with Store {
       isVazio = true;
     }
     isLoad = false;
+  }
+
+  @action
+  Future<void> postChamadaProf() async {
+    loadChamadaProf = true;
+    await professorService.postChamada(17, countCall);
+    loadChamadaProf = false;
   }
 }

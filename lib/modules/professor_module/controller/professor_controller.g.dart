@@ -89,6 +89,54 @@ mixin _$ProfessorController on _ProfessorController, Store {
     });
   }
 
+  late final _$loadChamadaProfAtom =
+      Atom(name: '_ProfessorController.loadChamadaProf', context: context);
+
+  @override
+  bool get loadChamadaProf {
+    _$loadChamadaProfAtom.reportRead();
+    return super.loadChamadaProf;
+  }
+
+  @override
+  set loadChamadaProf(bool value) {
+    _$loadChamadaProfAtom.reportWrite(value, super.loadChamadaProf, () {
+      super.loadChamadaProf = value;
+    });
+  }
+
+  late final _$countCallAtom =
+      Atom(name: '_ProfessorController.countCall', context: context);
+
+  @override
+  List<int> get countCall {
+    _$countCallAtom.reportRead();
+    return super.countCall;
+  }
+
+  @override
+  set countCall(List<int> value) {
+    _$countCallAtom.reportWrite(value, super.countCall, () {
+      super.countCall = value;
+    });
+  }
+
+  late final _$callAtom =
+      Atom(name: '_ProfessorController.call', context: context);
+
+  @override
+  List<int> get call {
+    _$callAtom.reportRead();
+    return super.call;
+  }
+
+  @override
+  set call(List<int> value) {
+    _$callAtom.reportWrite(value, super.call, () {
+      super.call = value;
+    });
+  }
+
   late final _$discProfessorAtom =
       Atom(name: '_ProfessorController.discProfessor', context: context);
 
@@ -141,8 +189,38 @@ mixin _$ProfessorController on _ProfessorController, Store {
         .run(() => super.setListaAlunosMateria(id));
   }
 
+  late final _$postChamadaProfAsyncAction =
+      AsyncAction('_ProfessorController.postChamadaProf', context: context);
+
+  @override
+  Future<void> postChamadaProf() {
+    return _$postChamadaProfAsyncAction.run(() => super.postChamadaProf());
+  }
+
   late final _$_ProfessorControllerActionController =
       ActionController(name: '_ProfessorController', context: context);
+
+  @override
+  void changeChamada(bool value, int index) {
+    final _$actionInfo = _$_ProfessorControllerActionController.startAction(
+        name: '_ProfessorController.changeChamada');
+    try {
+      return super.changeChamada(value, index);
+    } finally {
+      _$_ProfessorControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void ordenarChamada() {
+    final _$actionInfo = _$_ProfessorControllerActionController.startAction(
+        name: '_ProfessorController.ordenarChamada');
+    try {
+      return super.ordenarChamada();
+    } finally {
+      _$_ProfessorControllerActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void changeSelectedPage(int value) {
@@ -163,6 +241,9 @@ isMateriaLoad: ${isMateriaLoad},
 isVazio: ${isVazio},
 isVazioDisc: ${isVazioDisc},
 isSelectedPage: ${isSelectedPage},
+loadChamadaProf: ${loadChamadaProf},
+countCall: ${countCall},
+call: ${call},
 discProfessor: ${discProfessor},
 listAlunosMateria: ${listAlunosMateria}
     ''';

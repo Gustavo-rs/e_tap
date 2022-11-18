@@ -5,4 +5,6 @@ abstract class IProfessor {
   Future<List<DisciplinasProfessorModel>> getDisciplinasProfessor();
 
   Future<ListaAlunosMateria> getListaDeAlunosMateria(int id);
+
+  Future<String> postChamada(int id_meet, List<int> chamada);
 }

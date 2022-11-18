@@ -35,6 +35,12 @@ abstract class _GlobalController with Store {
   @observable
   bool hiddenShowPass = false;
 
+  @observable
+  bool hiddenShowPass1 = false;
+
+  @action
+  void changeObscureText1() => hiddenShowPass1 = !hiddenShowPass1;
+
   @action
   void changeObscureText() => hiddenShowPass = !hiddenShowPass;
 

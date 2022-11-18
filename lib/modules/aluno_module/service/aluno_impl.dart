@@ -30,8 +30,6 @@ class AlunoImpl extends IAlunoService {
             .toList();
       }
 
-      print(resposta.body);
-
       return [];
     } on PlatformException catch (e) {
       log(e.toString());

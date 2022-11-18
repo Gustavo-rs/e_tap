@@ -105,6 +105,22 @@ mixin _$GlobalController on _GlobalController, Store {
     });
   }
 
+  late final _$hiddenShowPass1Atom =
+      Atom(name: '_GlobalController.hiddenShowPass1', context: context);
+
+  @override
+  bool get hiddenShowPass1 {
+    _$hiddenShowPass1Atom.reportRead();
+    return super.hiddenShowPass1;
+  }
+
+  @override
+  set hiddenShowPass1(bool value) {
+    _$hiddenShowPass1Atom.reportWrite(value, super.hiddenShowPass1, () {
+      super.hiddenShowPass1 = value;
+    });
+  }
+
   late final _$emailInsertAsyncAction =
       AsyncAction('_GlobalController.emailInsert', context: context);
 
@@ -132,6 +148,17 @@ mixin _$GlobalController on _GlobalController, Store {
 
   late final _$_GlobalControllerActionController =
       ActionController(name: '_GlobalController', context: context);
+
+  @override
+  void changeObscureText1() {
+    final _$actionInfo = _$_GlobalControllerActionController.startAction(
+        name: '_GlobalController.changeObscureText1');
+    try {
+      return super.changeObscureText1();
+    } finally {
+      _$_GlobalControllerActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void changeObscureText() {
@@ -163,7 +190,8 @@ email: ${email},
 nome: ${nome},
 token: ${token},
 isTrocaSenhaLoad: ${isTrocaSenhaLoad},
-hiddenShowPass: ${hiddenShowPass}
+hiddenShowPass: ${hiddenShowPass},
+hiddenShowPass1: ${hiddenShowPass1}
     ''';
   }
 }

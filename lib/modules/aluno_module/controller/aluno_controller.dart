@@ -84,7 +84,12 @@ abstract class _AlunoController with Store {
     }
 
     isLoad = false;
-    dataHorasAluno = data[0];
+
+    if (data.length > 0) {
+      dataHorasAluno = data[0];
+    } else {
+      DataHorasAlunoModel();
+    }
   }
 
   @action
