@@ -1,7 +1,9 @@
+import 'package:app/core/components/app_snackbar.dart';
 import 'package:app/core/util/shared_impl.dart';
 import 'package:app/modules/aluno_module/model/data_horas_aluno_model.dart';
 import 'package:app/modules/aluno_module/model/materias_aluno_model.dart';
 import 'package:app/modules/aluno_module/service/aluno_impl.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
@@ -93,7 +95,17 @@ abstract class _AlunoController with Store {
   }
 
   @action
-  Future<void> callAluno() async {
-    String status = await alunoImpl.callAluno();
+  Future<void> callAluno(BuildContext context) async {
+    String status = await alunoImpl.callAluno(ndefWidgets);
+
+    if (status == 'success') {
+      setStateFunc('success');
+      Future.delayed(const Duration(seconds: 4), () {
+        setStateFunc('default');
+      });
+      AppSnackbar.success(context, 'Chamada cadastrada com sucesso!');
+    } else {
+      AppSnackbar.error(context, 'Erro ao cadastrar chamada!');
+    }
   }
 }

@@ -79,10 +79,65 @@ class ProfessorImpl implements IProfessor {
 
       print(resposta.body);
 
+      if (resposta.body.contains('already started')) {
+        return 'alreadystarted';
+      }
+
       return 'Success';
     } on PlatformException catch (e) {
       log(e.toString());
       return "error";
+    }
+  }
+
+  @override
+  Future<String> encerraChamada(int id_meet, List<int> chamada) async {
+    final token = await shared.read('token');
+
+    print(chamada);
+    final json = '{"id_meet": $id_meet,"sequence": $chamada}';
+    try {
+      final url = Uri.parse(
+          "https://projeto-integrador-production.up.railway.app/educator/finishcall/");
+      final resposta = await http.post(url,
+          headers: {
+            "Authorization": 'Bearer $token',
+          },
+          body: json);
+
+      print(resposta.body);
+
+      if (resposta.body.contains('finished')) {
+        return 'finish';
+      }
+
+      return 'Success';
+    } on PlatformException catch (e) {
+      log(e.toString());
+      return "error";
+    }
+  }
+
+  @override
+  Future<int> getIdMeet(int id_meet) async {
+    final token = await shared.read('token');
+
+    try {
+      final url = Uri.parse(
+          "https://projeto-integrador-production.up.railway.app/educator/getidmeet/$id_meet/");
+      final resposta = await http.get(
+        url,
+        headers: {
+          "Authorization": 'Bearer $token',
+        },
+      );
+
+      print(json.decode(resposta.body)['id_meet']);
+
+      return json.decode(resposta.body)['id_meet'];
+    } on PlatformException catch (e) {
+      log(e.toString());
+      return -1;
     }
   }
 }

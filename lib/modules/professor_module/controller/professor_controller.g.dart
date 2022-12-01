@@ -189,12 +189,21 @@ mixin _$ProfessorController on _ProfessorController, Store {
         .run(() => super.setListaAlunosMateria(id));
   }
 
-  late final _$postChamadaProfAsyncAction =
-      AsyncAction('_ProfessorController.postChamadaProf', context: context);
+  late final _$iniciarChamadaAsyncAction =
+      AsyncAction('_ProfessorController.iniciarChamada', context: context);
 
   @override
-  Future<void> postChamadaProf() {
-    return _$postChamadaProfAsyncAction.run(() => super.postChamadaProf());
+  Future<void> iniciarChamada(BuildContext context) {
+    return _$iniciarChamadaAsyncAction.run(() => super.iniciarChamada(context));
+  }
+
+  late final _$finalizarChamadaAsyncAction =
+      AsyncAction('_ProfessorController.finalizarChamada', context: context);
+
+  @override
+  Future<void> finalizarChamada(BuildContext context) {
+    return _$finalizarChamadaAsyncAction
+        .run(() => super.finalizarChamada(context));
   }
 
   late final _$_ProfessorControllerActionController =

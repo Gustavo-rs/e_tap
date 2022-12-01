@@ -7,5 +7,5 @@ abstract class IAlunoService {
 
   Future<MateriaAlunoModel> getMaterias(String id_aluno);
 
-  Future<void> callAluno();
+  Future<void> callAluno(String tag);
 }

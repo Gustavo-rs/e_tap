@@ -62,10 +62,10 @@ class AlunoImpl extends IAlunoService {
   }
 
   @override
-  Future<String> callAluno() async {
+  Future<String> callAluno(String tag) async {
     final token = await shared.read('token');
     final id_aluno = await shared.read('id');
-    final json = '{"id_student": $id_aluno,"tag_id": "128"}';
+    final json = '{"id_student": $id_aluno,"tag_id": "$tag"}';
     try {
       final url = Uri.parse(
           "https://projeto-integrador-production.up.railway.app/student/call/");
@@ -75,7 +75,13 @@ class AlunoImpl extends IAlunoService {
           },
           body: json);
 
-      return resposta.body;
+      print(resposta.body);
+
+      if (resposta.body.contains('Sucefully ')) {
+        return 'success';
+      }
+
+      return 'error';
     } on PlatformException catch (e) {
       log(e.toString());
       return 'Error';

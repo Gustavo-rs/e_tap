@@ -189,8 +189,8 @@ mixin _$AlunoController on _AlunoController, Store {
       AsyncAction('_AlunoController.callAluno', context: context);
 
   @override
-  Future<void> callAluno() {
-    return _$callAlunoAsyncAction.run(() => super.callAluno());
+  Future<void> callAluno(BuildContext context) {
+    return _$callAlunoAsyncAction.run(() => super.callAluno(context));
   }
 
   late final _$_AlunoControllerActionController =

@@ -1,4 +1,3 @@
-import 'package:app/core/components/app_snackbar.dart';
 import 'package:app/core/controller/global_controller.dart';
 import 'package:app/modules/aluno_module/controller/aluno_controller.dart';
 import 'package:app/modules/aluno_module/model/record.dart';
@@ -31,15 +30,7 @@ class _AlunoPageState extends State<AlunoPage> {
             final info = NdefRecordInfo.fromNdef(record);
 
             alunoController.setNdefWidgets(info.hash);
-            if (alunoController.ndefWidgets == '12345') {
-              alunoController.callAluno();
-              alunoController.setStateFunc('success');
-              Future.delayed(const Duration(seconds: 4), () {
-                alunoController.setStateFunc('default');
-              });
-            } else {
-              AppSnackbar.error(context, 'NFC não cadastrado!');
-            }
+            alunoController.callAluno(context);
           });
       }
 

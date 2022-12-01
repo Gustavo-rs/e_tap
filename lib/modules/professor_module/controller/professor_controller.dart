@@ -1,7 +1,10 @@
+import 'package:app/core/components/app_snackbar.dart';
+import 'package:app/core/util/shared_impl.dart';
 import 'package:app/modules/professor_module/model/disciplinas_professor_model.dart';
 import 'package:app/modules/professor_module/model/lista_alunos_materia_model.dart';
 import 'package:app/modules/professor_module/service/professor_impl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'professor_controller.g.dart';
@@ -14,6 +17,8 @@ abstract class _ProfessorController with Store {
   final nomeDisciplina = TextEditingController();
   final totalEncontros = TextEditingController();
   final totalChamadas = TextEditingController();
+
+  final shared = Modular.get<LocalStorageServiceImp>();
 
   @observable
   bool isLoad = false;
@@ -92,9 +97,36 @@ abstract class _ProfessorController with Store {
   }
 
   @action
-  Future<void> postChamadaProf() async {
-    loadChamadaProf = true;
-    await professorService.postChamada(17, countCall);
-    loadChamadaProf = false;
+  Future<void> iniciarChamada(BuildContext context) async {
+    final id = await shared.read('id');
+    if (countCall.isEmpty) {
+      AppSnackbar.error(context, "Selecione pelo menos uma chamada");
+    } else {
+      loadChamadaProf = true;
+      int idMeetResult = await professorService.getIdMeet(int.parse(id!));
+      String postChamadaResult =
+          await professorService.postChamada(idMeetResult, countCall);
+
+      if (postChamadaResult == "alreadystarted") {
+        AppSnackbar.error(context, "Chamada já foi iniciada");
+        loadChamadaProf = false;
+      }
+    }
+  }
+
+  @action
+  Future<void> finalizarChamada(BuildContext context) async {
+    final id = await shared.read('id');
+    int idMeetResult = await professorService.getIdMeet(int.parse(id!));
+    String postEncerraResult =
+        await professorService.encerraChamada(idMeetResult, countCall);
+
+    if (postEncerraResult == "finished") {
+      AppSnackbar.error(context, "Chamada já foi finalizada");
+      loadChamadaProf = false;
+    } else {
+      AppSnackbar.success(context, "Chamada finalizada com sucesso");
+      loadChamadaProf = false;
+    }
   }
 }

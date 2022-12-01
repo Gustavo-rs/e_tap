@@ -7,4 +7,8 @@ abstract class IProfessor {
   Future<ListaAlunosMateria> getListaDeAlunosMateria(int id);
 
   Future<String> postChamada(int id_meet, List<int> chamada);
+
+  Future<String> encerraChamada(int id_meet, List<int> chamada);
+
+  Future<int> getIdMeet(int id);
 }

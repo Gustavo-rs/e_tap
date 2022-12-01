@@ -12,8 +12,8 @@ class LoginPage extends StatelessWidget {
     final loginController = Modular.get<LoginController>();
     // loginController.email_controller.text = 'alunoteste@gmail.com';
     // loginController.senha_controller.text = '123456';
-    loginController.email_controller.text = 'professorteste@gmail.com';
-    loginController.senha_controller.text = 'senhateste';
+    // loginController.email_controller.text = 'gustavotop@gmail.com';
+    // loginController.senha_controller.text = 'senha';
 
     return Scaffold(
       body: Container(

@@ -146,40 +146,49 @@ class _ProfessorPageState extends State<ProfessorPage> {
                               height: 40,
                             ),
                             professorController.loadChamadaProf
-                                ? Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.35,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.75,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.1),
-                                          spreadRadius: 2,
-                                          blurRadius: 10,
-                                          offset: Offset(0, 3),
+                                ? GestureDetector(
+                                    onTap: () {
+                                      professorController
+                                          .finalizarChamada(context);
+                                    },
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.35,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.75,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.1),
+                                            spreadRadius: 2,
+                                            blurRadius: 10,
+                                            offset: Offset(0, 3),
+                                          ),
+                                        ],
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Finalizar Chamada",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .085,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
                                         ),
-                                      ],
-                                      color: Colors.red,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Aguarde...",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                .085,
-                                            fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.center,
                                       ),
                                     ),
                                   )
                                 : GestureDetector(
                                     onTap: () {
-                                      professorController.postChamadaProf();
+                                      professorController
+                                          .iniciarChamada(context);
                                     },
                                     child: Container(
                                       height:
