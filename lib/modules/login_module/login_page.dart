@@ -55,12 +55,12 @@ class LoginPage extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("e-Tap",
-                  style: TextStyle(
-                    color: Color(0xFF477BFF),
-                    fontSize: MediaQuery.of(context).size.width * 0.18,
-                    fontWeight: FontWeight.bold,
-                  )),
+              Image.asset(
+                'assets/images/logo_etap.png',
+                color: Color(0xFF477BFF),
+                width: 200,
+                height: 200,
+              ),
               SizedBox(
                 height: 60,
               ),

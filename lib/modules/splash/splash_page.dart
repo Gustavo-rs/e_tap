@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:lottie/lottie.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -23,9 +22,9 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       backgroundColor: Color(0xFF107AFF),
       body: Center(
-        child: Lottie.asset(
-          'assets/logo.json',
-          width: MediaQuery.of(context).size.width * 0.5,
+        child: Image.asset(
+          'assets/etap_gif.gif',
+          width: MediaQuery.of(context).size.width * 0.9,
         ),
       ),
     );

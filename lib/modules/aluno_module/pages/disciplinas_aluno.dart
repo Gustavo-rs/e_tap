@@ -141,70 +141,74 @@ class _DisciplinasAlunoState extends State<DisciplinasAluno> {
                       ),
                     if (!alunoController.isMateriaLoad &&
                         !alunoController.isVazio)
-                      ListView.builder(
-                        itemCount:
-                            alunoController.materiasAlunos.subjects!.length,
-                        shrinkWrap: true,
-                        itemBuilder: ((context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  enableDrag: false,
-                                  backgroundColor: globalController.themes
-                                      ? Colors.white
-                                      : Color(0xFF303030),
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20))),
-                                  isDismissible: false,
-                                  isScrollControlled: true,
-                                  builder: (context) => SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                .9,
-                                        child: DataHorariosAluno(
-                                            id_disciplina: alunoController
-                                                .materiasAlunos
-                                                .subjects![index]
-                                                .subjectId
-                                                .toString(),
-                                            nome_disciplina: alunoController
-                                                .materiasAlunos
-                                                .subjects![index]
-                                                .subjectName!),
-                                      ));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 20),
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                elevation: 0,
-                                color: globalController.themes
-                                    ? Colors.grey[100]
-                                    : Colors.black12.withOpacity(0.1),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ListTile(
-                                    title: Text(
-                                        alunoController.materiasAlunos
-                                            .subjects![index].subjectName!,
-                                        style: TextStyle(
-                                            color: globalController.themes
-                                                ? Color(0xFF303030)
-                                                : Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16)),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.65,
+                        child: ListView.builder(
+                          itemCount:
+                              alunoController.materiasAlunos.subjects!.length,
+                          shrinkWrap: true,
+                          itemBuilder: ((context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    enableDrag: false,
+                                    backgroundColor: globalController.themes
+                                        ? Colors.white
+                                        : Color(0xFF303030),
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20))),
+                                    isDismissible: false,
+                                    isScrollControlled: true,
+                                    builder: (context) => SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              .9,
+                                          child: DataHorariosAluno(
+                                              id_disciplina: alunoController
+                                                  .materiasAlunos
+                                                  .subjects![index]
+                                                  .subjectId
+                                                  .toString(),
+                                              nome_disciplina: alunoController
+                                                  .materiasAlunos
+                                                  .subjects![index]
+                                                  .subjectName!),
+                                        ));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 20),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  elevation: 0,
+                                  color: globalController.themes
+                                      ? Colors.grey[100]
+                                      : Colors.black12.withOpacity(0.1),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListTile(
+                                      title: Text(
+                                          alunoController.materiasAlunos
+                                              .subjects![index].subjectName!,
+                                          style: TextStyle(
+                                              color: globalController.themes
+                                                  ? Color(0xFF303030)
+                                                  : Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16)),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        }),
+                            );
+                          }),
+                        ),
                       ),
                   ],
                 ),
